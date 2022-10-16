@@ -1,6 +1,6 @@
 import { serve } from './deps.ts';
 
-import { Presentation } from './presentation.ts';
+import { Presentation } from './lib/presentation.ts';
 
 const port = 8080;
 
