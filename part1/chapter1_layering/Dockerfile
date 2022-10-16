@@ -4,12 +4,13 @@ EXPOSE 8080
 
 WORKDIR /app
 
-USER deno
-
 COPY deps.ts .
 RUN deno cache deps.ts
 
-ADD . .
-RUN deno cache main.ts
+COPY entrypoint.sh /usr/bin/
+RUN chmod +x /usr/bin/entrypoint.sh
+ENTRYPOINT ["entrypoint.sh"]
 
-CMD ["run", "--allow-net", "main.ts"]
+USER deno
+
+CMD ["deno", "run", "--allow-net", "main.ts"]
