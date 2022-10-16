@@ -1,3 +1,3 @@
 ```console
-$ deno run --allow-net main.ts
+$ docker-compose up
 ```
