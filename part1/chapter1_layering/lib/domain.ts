@@ -1,14 +1,12 @@
 export class Crew {
-  id: number;
-  name: string;
+  constructor(
+    private id: number,
+    public name: string,
+    private reward: number,
+  ){}
 
-  constructor({id, name}: {id: number, name: string}) {
-    this.id = id;
-    this.name = name;
-  }
-
-  isCaptain() {
-    return this.name == 'Ruffy';
+  isDanger() {
+    return this.reward >= 1_000_000_000;
   }
 }
 
