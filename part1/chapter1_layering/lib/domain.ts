@@ -21,7 +21,8 @@ export class Domain {
     this.dataSource = dataSource;
   }
 
-  crews(): Promise<Crew[]> {
+  doComplexThings(): Promise<Crew[]> {
+    // Imagine that complex things will be done in this method.
     return this.dataSource.list();
   }
 }

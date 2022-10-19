@@ -4,7 +4,7 @@ export class Presentation {
   constructor(private domain: Domain){}
 
   async render(): Promise<string> {
-    const crews = await this.domain.crews();
+    const crews = await this.domain.doComplexThings();
 
     const content = crews
       .map((crew: Crew) => {
