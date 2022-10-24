@@ -1,6 +1,6 @@
-import { client } from './postgres_client.ts';
+import { client } from "./postgres_client.ts";
 
-import { Crew } from './domain.ts';
+import { Crew } from "./domain.ts";
 
 interface Row {
   id: number;
@@ -10,8 +10,10 @@ interface Row {
 
 export class DataSource {
   static async list(): Promise<Crew[]> {
-    const sql = 'SELECT id, name, reward FROM crews';
-    const result = await client.queryObject(sql) as {rows: Row[]};
-    return result.rows.map(({id, name, reward}: Row) => new Crew(id, name, reward));
+    const sql = "SELECT id, name, reward FROM crews";
+    const result = await client.queryObject(sql) as { rows: Row[] };
+    return result.rows.map(({ id, name, reward }: Row) =>
+      new Crew(id, name, reward)
+    );
   }
 }

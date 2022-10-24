@@ -3,7 +3,7 @@ export class Crew {
     private id: number,
     public name: string,
     private reward: number,
-  ){}
+  ) {}
 
   isDanger() {
     return this.reward >= 1_000_000_000;

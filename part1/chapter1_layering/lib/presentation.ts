@@ -1,4 +1,4 @@
-import { Crew, Domain } from './domain.ts';
+import { Crew, Domain } from "./domain.ts";
 
 export class Presentation {
   constructor(private domain: Domain) {
@@ -10,9 +10,9 @@ export class Presentation {
 
     const content = crews
       .map((crew: Crew) => {
-        return `<li>${crew.name}${crew.isDanger() ? ' (Danger)' : ''}</li>`
+        return `<li>${crew.name}${crew.isDanger() ? " (Danger)" : ""}</li>`;
       })
-      .join('');
+      .join("");
 
     const html = `
       <html>

@@ -1,8 +1,8 @@
-import { serve } from './deps.ts';
+import { serve } from "./deps.ts";
 
-import { DataSource } from './lib/data_source.ts';
-import { Domain } from './lib/domain.ts';
-import { Presentation } from './lib/presentation.ts';
+import { DataSource } from "./lib/data_source.ts";
+import { Domain } from "./lib/domain.ts";
+import { Presentation } from "./lib/presentation.ts";
 
 const port = 8080;
 
