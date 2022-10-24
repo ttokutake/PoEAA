@@ -12,6 +12,6 @@ export class DataSource {
   static async list(): Promise<Crew[]> {
     const sql = 'SELECT id, name, reward FROM crews';
     const result = await client.queryObject(sql) as {rows: Row[]};
-    return result.rows.map((row: Row) => new Crew(...Object.values(row)));
+    return result.rows.map(({id, name, reward}: Row) => new Crew(id, name, reward));
   }
 }
