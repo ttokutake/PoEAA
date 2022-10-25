@@ -2,16 +2,21 @@ export class Crew {
   constructor(
     private id: number,
     public name: string,
-    private reward: number,
+    public bounty: bigint,
   ) {}
 
   isDanger() {
-    return this.reward >= 1_000_000_000;
+    return this.bounty >= 1_000_000_000;
   }
 }
 
 export interface IDataSource {
   list: () => Promise<Crew[]>;
+}
+
+export interface Pirate {
+  totalBounty: bigint;
+  crews: Crew[];
 }
 
 export class Domain {
@@ -21,8 +26,15 @@ export class Domain {
     this.dataSource = dataSource;
   }
 
-  doComplexThings(): Promise<Crew[]> {
-    // Imagine that complex things will be done in this method.
-    return this.dataSource.list();
+  async strawHatPirates(): Promise<Pirate> {
+    const crews = await this.dataSource.list();
+    const totalBounty = crews.reduce(
+      (sum: bigint, c: Crew) => sum + c.bounty,
+      BigInt(0),
+    );
+    return {
+      totalBounty,
+      crews,
+    };
   }
 }

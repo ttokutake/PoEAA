@@ -6,9 +6,9 @@ export class Presentation {
   }
 
   async handler(_request: Request): Promise<Response> {
-    const crews = await this.domain.doComplexThings();
+    const pirate = await this.domain.strawHatPirates();
 
-    const content = crews
+    const content = pirate.crews
       .map((crew: Crew) => {
         return `<li>${crew.name}${crew.isDanger() ? " (Danger)" : ""}</li>`;
       })
@@ -18,6 +18,7 @@ export class Presentation {
       <html>
         <title>Layering</title>
         <body>
+          <div>Total Bounty: ${pirate.totalBounty}</div>
           <ul>
             ${content}
           </ul>
