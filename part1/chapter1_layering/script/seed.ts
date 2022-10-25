@@ -21,6 +21,6 @@ await transaction.begin();
 await transaction
   .queryArray`CREATE TABLE IF NOT EXISTS crews (id SERIAL, name VARCHAR(256), bounty BIGINT)`;
 await insertCrew(transaction, "Ruffy", 1_500_000_000);
-await insertCrew(transaction, "Zorro", 320_000_000);
+await insertCrew(transaction, "Zoro", 320_000_000);
 
 await transaction.commit();
