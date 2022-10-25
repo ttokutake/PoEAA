@@ -11,7 +11,7 @@ interface Row {
 export const DataSource: IDataSource = class {
   static async list(): Promise<Crew[]> {
     const sql = "SELECT id, name, bounty FROM crews";
-    const result = await client.queryObject(sql) as { rows: Row[] };
+    const result = await client.queryObject<Row>(sql);
     return result.rows.map(({ id, name, bounty }: Row) =>
       new Crew(id, name, bounty)
     );
