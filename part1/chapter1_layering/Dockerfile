@@ -7,6 +7,8 @@ WORKDIR /app
 COPY deps.ts .
 RUN deno cache deps.ts
 
+RUN chown -R deno:deno /deno-dir
+
 COPY entrypoint.sh /usr/bin/
 RUN chmod +x /usr/bin/entrypoint.sh
 ENTRYPOINT ["entrypoint.sh"]
