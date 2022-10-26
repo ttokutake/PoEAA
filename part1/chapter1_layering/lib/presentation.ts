@@ -5,8 +5,11 @@ export class Presentation {
     this.handler = this.handler.bind(this);
   }
 
-  async handler(_request: Request): Promise<Response> {
-    const pirate = await this.domain.strawHatPirates();
+  async handler(request: Request): Promise<Response> {
+    const url = new URL(request.url);
+    const isAsc = url.searchParams.get("direction") != "desc";
+
+    const pirate = await this.domain.listStrawHatPirates(isAsc);
 
     const content = pirate.crews
       .map((crew: Crew) => {
@@ -22,6 +25,10 @@ export class Presentation {
           <ul>
             ${content}
           </ul>
+          <div>
+            <a href="?direction=asc">List by ascending order</a>
+            <a href="?direction=desc">List by descending order</a>
+          </div>
         </body>
       </html>
     `;

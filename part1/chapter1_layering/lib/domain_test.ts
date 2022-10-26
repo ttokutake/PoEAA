@@ -9,18 +9,19 @@ Deno.test("Domain", async (t) => {
   ];
 
   const TestDataSource: IDataSource = class {
-    static list(): Promise<Crew[]> {
+    static list(_isAsc: boolean): Promise<Crew[]> {
       return Promise.resolve(crews);
     }
   };
 
   const domain = new Domain(TestDataSource);
 
-  await t.step("strawHatPirates", async () => {
+  await t.step("listStrawHatPirates", async () => {
     const expected = {
       totalBounty: BigInt(330_000_100),
       crews,
     };
-    assertEquals(await domain.strawHatPirates(), expected);
+    const isAsc = true;
+    assertEquals(await domain.listStrawHatPirates(isAsc), expected);
   });
 });

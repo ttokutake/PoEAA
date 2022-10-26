@@ -11,7 +11,7 @@ export class Crew {
 }
 
 export interface IDataSource {
-  list: () => Promise<Crew[]>;
+  list: (isAsc: boolean) => Promise<Crew[]>;
 }
 
 export interface Pirate {
@@ -26,8 +26,8 @@ export class Domain {
     this.dataSource = dataSource;
   }
 
-  async strawHatPirates(): Promise<Pirate> {
-    const crews = await this.dataSource.list();
+  async listStrawHatPirates(isAsc: boolean): Promise<Pirate> {
+    const crews = await this.dataSource.list(isAsc);
     const totalBounty = crews.reduce(
       (sum: bigint, c: Crew) => sum + c.bounty,
       BigInt(0),
