@@ -1,26 +1,24 @@
-import { Transaction } from "../deps.ts";
 import { client } from "../lib/postgres_client.ts";
 
 async function insertCrew(
-  transaction: Transaction,
+  id: number,
   name: string,
   bounty: number,
 ) {
-  const result = await transaction
-    .queryArray`SELECT * from crews where name = ${name}`;
-
-  if (result.rows.length == 0) {
-    await transaction
-      .queryArray`INSERT INTO crews VALUES (nextval('crews_id_seq'), ${name}, ${bounty})`;
-  }
+  await client.queryArray`
+    INSERT INTO crews
+    VALUES (${id}, ${name}, ${bounty})
+    ON CONFLICT ON CONSTRAINT crews_pkey
+    DO NOTHING
+  `;
 }
 
-const transaction = client.createTransaction("seed");
-await transaction.begin();
-
-await transaction
-  .queryArray`CREATE TABLE IF NOT EXISTS crews (id SERIAL, name VARCHAR(256), bounty BIGINT)`;
-await insertCrew(transaction, "Ruffy", 1_500_000_000);
-await insertCrew(transaction, "Zoro", 320_000_000);
-
-await transaction.commit();
+await client.queryArray`
+  CREATE TABLE IF NOT EXISTS crews (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(256),
+    bounty BIGINT
+  )
+`;
+await insertCrew(1, "Ruffy", 1_500_000_000);
+await insertCrew(2, "Zoro", 320_000_000);
