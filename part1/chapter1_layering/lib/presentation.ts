@@ -1,15 +1,11 @@
 import { Crew, Domain } from "./domain.ts";
 
 export class Presentation {
-  constructor(private domain: Domain) {
-    this.handler = this.handler.bind(this);
-  }
-
-  async handler(request: Request): Promise<Response> {
+  static async handler(request: Request): Promise<Response> {
     const url = new URL(request.url);
     const isAsc = url.searchParams.get("direction") != "desc";
 
-    const pirate = await this.domain.listStrawHatPirates(isAsc);
+    const pirate = await Domain.listStrawHatPirates(isAsc);
 
     const content = pirate.crews
       .map((crew: Crew) => {

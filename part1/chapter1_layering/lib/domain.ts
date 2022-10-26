@@ -1,3 +1,5 @@
+import { DataSource, Row } from "./data_source.ts";
+
 export class Crew {
   constructor(
     private id: number,
@@ -10,24 +12,17 @@ export class Crew {
   }
 }
 
-export interface IDataSource {
-  list: (isAsc: boolean) => Promise<Crew[]>;
-}
-
 export interface Pirate {
   totalBounty: bigint;
   crews: Crew[];
 }
 
 export class Domain {
-  dataSource: IDataSource;
-
-  constructor(dataSource: IDataSource) {
-    this.dataSource = dataSource;
-  }
-
-  async listStrawHatPirates(isAsc: boolean): Promise<Pirate> {
-    const crews = await this.dataSource.list(isAsc);
+  static async listStrawHatPirates(isAsc: boolean): Promise<Pirate> {
+    const rows = await DataSource.list(isAsc);
+    const crews = rows.map(({ id, name, bounty }: Row) =>
+      new Crew(id, name, bounty)
+    );
     const totalBounty = crews.reduce(
       (sum: bigint, c: Crew) => sum + c.bounty,
       BigInt(0),
