@@ -1,17 +1,8 @@
-export class Crew {
-  constructor(
-    private id: number,
-    public name: string,
-    public bounty: bigint,
-  ) {}
+import { Row, TableDataGateway } from "./data_source.ts";
 
-  isDanger() {
-    return this.bounty >= 1_000_000_000;
-  }
-}
-
-export interface IDataSource {
-  list: (isAsc: boolean) => Promise<Crew[]>;
+export interface Crew {
+  name: string;
+  isDanger: boolean;
 }
 
 export interface Pirate {
@@ -19,18 +10,15 @@ export interface Pirate {
   crews: Crew[];
 }
 
-export class Domain {
-  dataSource: IDataSource;
-
-  constructor(dataSource: IDataSource) {
-    this.dataSource = dataSource;
-  }
-
-  async listStrawHatPirates(isAsc: boolean): Promise<Pirate> {
-    const crews = await this.dataSource.list(isAsc);
-    const totalBounty = crews.reduce(
-      (sum: bigint, c: Crew) => sum + c.bounty,
+export class TransactionScript {
+  static async listStrawHatPirates(): Promise<Pirate> {
+    const rows = await TableDataGateway.findAll();
+    const totalBounty = rows.reduce(
+      (sum: bigint, r: Row) => sum + r.bounty,
       BigInt(0),
+    );
+    const crews = rows.map(
+      (r: Row) => ({ name: r.name, isDanger: r.bounty >= 1_000_000_000 }),
     );
     return {
       totalBounty,
