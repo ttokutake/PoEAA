@@ -1,30 +1,24 @@
-import { RecordSet, Row, TableDataGateway } from "./data_source.ts";
+import { RecordSet, Row } from "./data_source.ts";
 
-export class Crew {
-  constructor(
-    public name: string,
-    private bounty: bigint,
-  ) {}
+export class TableModule {
+  crews: RecordSet;
 
-  isDanger() {
-    return this.bounty >= 1_000_000_000;
+  constructor(recordSet: RecordSet) {
+    this.crews = recordSet;
   }
-}
 
-export class StrawHatPirates {
-  crews: Crew[];
-  totalBounty: bigint;
-
-  private constructor(recordSet: RecordSet) {
-    this.crews = recordSet.map((r: Row) => new Crew(r.name, r.bounty));
-    this.totalBounty = recordSet.reduce(
+  totalBounty() {
+    return this.crews.reduce(
       (sum: bigint, r: Row) => sum + r.bounty,
       BigInt(0),
     );
   }
 
-  static async build() {
-    const recordSet = await TableDataGateway.findAll();
-    return new this(recordSet);
+  isDanger(id: number) {
+    const crew = this.crews.find((c: Row) => c.id == id);
+    if (!crew) {
+      throw Error("Crew is not found.");
+    }
+    return crew.bounty >= 1_000_000_000;
   }
 }

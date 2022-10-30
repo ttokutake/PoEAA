@@ -1,12 +1,16 @@
-import { Crew, StrawHatPirates } from "./domain.ts";
+import { Row, TableDataGateway } from "./data_source.ts";
+import { TableModule } from "./domain.ts";
 
 export class Presentation {
   static async handler(_request: Request): Promise<Response> {
-    const pirate = await StrawHatPirates.build();
+    const recordSet = await TableDataGateway.findAll();
+    const tableModule = new TableModule(recordSet);
 
-    const content = pirate.crews
-      .map((crew: Crew) => {
-        return `<li>${crew.name}${crew.isDanger() ? " (Danger)" : ""}</li>`;
+    const content = tableModule.crews
+      .map((crew: Row) => {
+        return `<li>${crew.name}${
+          tableModule.isDanger(crew.id) ? " (Danger)" : ""
+        }</li>`;
       })
       .join("");
 
@@ -14,7 +18,7 @@ export class Presentation {
       <html>
         <title>Organizing Domain Logic</title>
         <body>
-          <div>Total Bounty: ${pirate.totalBounty}</div>
+          <div>Total Bounty: ${tableModule.totalBounty()}</div>
           <ul>
             ${content}
           </ul>
