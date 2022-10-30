@@ -1,28 +1,30 @@
-import { Row, TableDataGateway } from "./data_source.ts";
+import { RecordSet, Row, TableDataGateway } from "./data_source.ts";
 
-export interface Crew {
-  name: string;
-  isDanger: boolean;
+export class Crew {
+  constructor(
+    public name: string,
+    private bounty: bigint,
+  ) {}
+
+  isDanger() {
+    return this.bounty >= 1_000_000_000;
+  }
 }
 
-export interface Pirate {
-  totalBounty: bigint;
+export class StrawHatPirates {
   crews: Crew[];
-}
+  totalBounty: bigint;
 
-export class TransactionScript {
-  static async listStrawHatPirates(): Promise<Pirate> {
-    const rows = await TableDataGateway.findAll();
-    const totalBounty = rows.reduce(
+  private constructor(recordSet: RecordSet) {
+    this.crews = recordSet.map((r: Row) => new Crew(r.name, r.bounty));
+    this.totalBounty = recordSet.reduce(
       (sum: bigint, r: Row) => sum + r.bounty,
       BigInt(0),
     );
-    const crews = rows.map(
-      (r: Row) => ({ name: r.name, isDanger: r.bounty >= 1_000_000_000 }),
-    );
-    return {
-      totalBounty,
-      crews,
-    };
+  }
+
+  static async build() {
+    const recordSet = await TableDataGateway.findAll();
+    return new this(recordSet);
   }
 }

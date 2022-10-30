@@ -1,12 +1,12 @@
-import { Crew, TransactionScript } from "./domain.ts";
+import { Crew, StrawHatPirates } from "./domain.ts";
 
 export class Presentation {
   static async handler(_request: Request): Promise<Response> {
-    const pirate = await TransactionScript.listStrawHatPirates();
+    const pirate = await StrawHatPirates.build();
 
     const content = pirate.crews
       .map((crew: Crew) => {
-        return `<li>${crew.name}${crew.isDanger ? " (Danger)" : ""}</li>`;
+        return `<li>${crew.name}${crew.isDanger() ? " (Danger)" : ""}</li>`;
       })
       .join("");
 
