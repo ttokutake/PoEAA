@@ -1,8 +1,9 @@
-import { Crew, StrawHatPirates } from "./domain.ts";
+import { Crew } from "./domain.ts";
+import { StrawHatPiratesService } from "./service.ts";
 
 export class Presentation {
   static async handler(_request: Request): Promise<Response> {
-    const pirate = await StrawHatPirates.build();
+    const pirate = await StrawHatPiratesService.list();
 
     const content = pirate.crews
       .map((crew: Crew) => {
