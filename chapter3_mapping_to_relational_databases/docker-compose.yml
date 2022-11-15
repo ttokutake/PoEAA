@@ -1,0 +1,16 @@
+version: "3.9"
+services:
+  db:
+    image: postgres:15.0
+    volumes:
+      - postgresql-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: password
+  develop:
+    build: .
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+volumes:
+  postgresql-data:
