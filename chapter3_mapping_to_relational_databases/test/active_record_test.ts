@@ -1,0 +1,69 @@
+import {
+  assertEquals,
+  assertRejects,
+} from "https://deno.land/std@0.160.0/testing/asserts.ts";
+import {
+  afterAll,
+  afterEach,
+  beforeAll,
+  beforeEach,
+  describe,
+  it,
+} from "../dev_deps.ts";
+
+import { Crew } from "../src/active_record.ts";
+import { createTable, dropTable, truncateTable } from "./test_helper.ts";
+
+async function insertData() {
+  const crew = new Crew("Nami", BigInt(60_000_000));
+  await crew.insert();
+}
+
+describe("Crew", () => {
+  beforeAll(async () => {
+    await createTable();
+  });
+  afterAll(async () => {
+    await dropTable();
+  });
+
+  beforeEach(async () => {
+    await insertData();
+  });
+  afterEach(async () => {
+    await truncateTable();
+  });
+
+  it("update", async () => {
+    const crew = await Crew.find(1);
+    crew.name = "Usopp";
+    await crew.update();
+
+    const updatedCrew = await Crew.find(1);
+    assertEquals(updatedCrew.name, "Usopp");
+    assertEquals(updatedCrew.bounty, BigInt(60_000_000));
+  });
+
+  it("delete", async () => {
+    const crew = await Crew.find(1);
+    await crew.delete();
+
+    assertRejects(() => Crew.find(1), Error, "Record Not Found");
+  });
+
+  it("find", async () => {
+    const crew = await Crew.find(1);
+
+    assertEquals(crew.name, "Nami");
+    assertEquals(crew.bounty, BigInt(60_000_000));
+  });
+
+  it("isDanger", async () => {
+    const crew = await Crew.find(1);
+    crew.bounty = BigInt(999_999_999);
+    assertEquals(crew.isDanger(), false);
+
+    crew.bounty = BigInt(1_000_000_000);
+    assertEquals(crew.isDanger(), true);
+  });
+});
