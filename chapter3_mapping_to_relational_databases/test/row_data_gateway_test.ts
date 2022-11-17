@@ -12,7 +12,7 @@ import {
 } from "../dev_deps.ts";
 
 import { CrewGateway } from "../src/row_data_gateway.ts";
-import { truncateTable, createTable, dropTable } from "./test_helper.ts";
+import { createTable, dropTable, truncateTable } from "./test_helper.ts";
 
 async function insertData() {
   const data = new CrewGateway("Nami", BigInt(60_000_000));
@@ -53,6 +53,7 @@ describe("CrewGateway", () => {
 
   it("find", async () => {
     const data = await CrewGateway.find(1);
+
     assertEquals(data.name, "Nami");
     assertEquals(data.bounty, BigInt(60_000_000));
   });
