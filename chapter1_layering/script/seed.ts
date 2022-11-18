@@ -20,5 +20,5 @@ await client.queryArray`
     bounty BIGINT
   )
 `;
-await insertCrew(1, "Ruffy", 1_500_000_000);
+await insertCrew(1, "Luffy", 1_500_000_000);
 await insertCrew(2, "Zoro", 320_000_000);
