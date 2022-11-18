@@ -1,4 +1,4 @@
-import { client } from "./postgres_client.ts";
+import { client } from "../postgres_client.ts";
 
 interface Row {
   id: number;
@@ -6,7 +6,7 @@ interface Row {
   bounty: bigint;
 }
 
-export class CrewGateway {
+export class Crew {
   private id = 0;
 
   constructor(
@@ -40,7 +40,7 @@ export class CrewGateway {
     `;
   }
 
-  static async find(id: number): Promise<CrewGateway> {
+  static async find(id: number): Promise<Crew> {
     const { rows: [row] } = await client.queryObject<Row>`
       SELECT id, name, bounty
       FROM crews
@@ -50,8 +50,12 @@ export class CrewGateway {
     if (!row) {
       throw new Error("Record Not Found");
     }
-    const crewGateway = new CrewGateway(row.name, row.bounty);
-    crewGateway.id = row.id;
-    return crewGateway;
+    const crew = new Crew(row.name, row.bounty);
+    crew.id = row.id;
+    return crew;
+  }
+
+  isDanger(): boolean {
+    return this.bounty >= 1_000_000_000;
   }
 }

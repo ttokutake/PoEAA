@@ -1,4 +1,4 @@
-import { client } from "./postgres_client.ts";
+import { client } from "../postgres_client.ts";
 
 interface Row {
   id: number;

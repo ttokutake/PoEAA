@@ -9,11 +9,11 @@ import {
   beforeEach,
   describe,
   it,
-} from "../dev_deps.ts";
+} from "../../dev_deps.ts";
 
-import { Crew } from "../src/domain.ts";
-import { CrewMapper } from "../src/data_mapper.ts";
-import { createTable, dropTable, truncateTable } from "./test_helper.ts";
+import { Crew } from "../../src/architectural_patterns/domain.ts";
+import { CrewMapper } from "../../src/architectural_patterns/data_mapper.ts";
+import { createTable, dropTable, truncateTable } from "../test_helper.ts";
 
 async function insertData() {
   const crewMapper = new CrewMapper();

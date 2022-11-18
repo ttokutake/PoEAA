@@ -6,10 +6,10 @@ import {
   beforeEach,
   describe,
   it,
-} from "../dev_deps.ts";
+} from "../../dev_deps.ts";
 
-import { CrewGateway } from "../src/table_data_gateway.ts";
-import { createTable, dropTable, truncateTable } from "./test_helper.ts";
+import { CrewGateway } from "../../src/architectural_patterns/table_data_gateway.ts";
+import { createTable, dropTable, truncateTable } from "../test_helper.ts";
 
 async function insertData() {
   const crewGateway = new CrewGateway();

@@ -9,10 +9,10 @@ import {
   beforeEach,
   describe,
   it,
-} from "../dev_deps.ts";
+} from "../../dev_deps.ts";
 
-import { CrewGateway } from "../src/row_data_gateway.ts";
-import { createTable, dropTable, truncateTable } from "./test_helper.ts";
+import { CrewGateway } from "../../src/architectural_patterns/row_data_gateway.ts";
+import { createTable, dropTable, truncateTable } from "../test_helper.ts";
 
 async function insertData() {
   const data = new CrewGateway("Nami", BigInt(60_000_000));

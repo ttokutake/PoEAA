@@ -1,7 +1,6 @@
-import { assertEquals } from "https://deno.land/std@0.160.0/testing/asserts.ts";
-import { describe, it } from "../dev_deps.ts";
+import { assertEquals, describe, it } from "../../dev_deps.ts";
 
-import { Crew } from "../src/domain.ts";
+import { Crew } from "../../src/architectural_patterns/domain.ts";
 
 describe("Crew", () => {
   it("isDanger", () => {
