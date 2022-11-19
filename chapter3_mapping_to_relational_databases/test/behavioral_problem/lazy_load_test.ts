@@ -19,7 +19,7 @@ async function insertData() {
   await insertedCrew.addSpecialMove("Gum-Gum Bazooka");
 }
 
-describe("CrewGateway", () => {
+describe("Crew", () => {
   beforeAll(async () => {
     await createCrewsTable();
     await createSpecialMovesTable();

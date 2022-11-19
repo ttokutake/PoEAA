@@ -36,7 +36,7 @@ async function insertData() {
   }
 }
 
-describe("CrewGateway", () => {
+describe("Crew", () => {
   beforeAll(async () => {
     await createCrewsTable();
     await createSpecialMovesTable();

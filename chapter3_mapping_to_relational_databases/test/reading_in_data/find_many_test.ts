@@ -22,7 +22,7 @@ async function insertData() {
   }
 }
 
-describe("CrewFinder", () => {
+describe("CrewGateway", () => {
   beforeAll(async () => {
     await createCrewsTable();
   });
