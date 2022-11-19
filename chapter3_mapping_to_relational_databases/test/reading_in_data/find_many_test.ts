@@ -8,7 +8,7 @@ import {
   it,
 } from "../../dev_deps.ts";
 
-import { CrewGateway } from "../../src/reading/find_many.ts";
+import { CrewGateway } from "../../src/reading_in_data/find_many.ts";
 import { createTable, dropTable, truncateTable } from "../test_helper.ts";
 
 async function insertData() {

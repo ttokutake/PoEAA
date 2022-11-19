@@ -8,7 +8,7 @@ import {
   it,
 } from "../../dev_deps.ts";
 
-import { CrewGateway } from "../../src/behavior/identity_map.ts";
+import { CrewGateway } from "../../src/behavioral_problem/identity_map.ts";
 import { createTable, dropTable, truncateTable } from "../test_helper.ts";
 
 async function insertData() {

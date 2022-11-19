@@ -8,7 +8,7 @@ import {
   it,
 } from "../../dev_deps.ts";
 
-import { Crew } from "../../src/behavior/lazy_load.ts";
+import { Crew } from "../../src/behavioral_problem/lazy_load.ts";
 import { createTable, dropTable, truncateTable } from "../test_helper.ts";
 
 async function insertData() {

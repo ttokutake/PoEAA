@@ -8,7 +8,7 @@ import {
   it,
 } from "../../dev_deps.ts";
 
-import { Crew } from "../../src/reading/find_many_with_join.ts";
+import { Crew } from "../../src/reading_in_data/find_many_with_join.ts";
 import { createTable, dropTable, truncateTable } from "../test_helper.ts";
 
 async function insertData() {

@@ -12,7 +12,7 @@ import {
   Crew,
   CrewFinder,
   PopularityVoteService,
-} from "../../src/reading/finder.ts";
+} from "../../src/reading_in_data/finder.ts";
 import { createTable, dropTable, truncateTable } from "../test_helper.ts";
 
 async function insertData() {
