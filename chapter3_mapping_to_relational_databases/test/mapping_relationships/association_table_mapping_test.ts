@@ -12,7 +12,13 @@ import {
   Crew,
   Haki,
 } from "../../src/mapping_relationships/association_table_mapping.ts";
-import { createCrewsTable, createHakiListTable, dropTable, truncateCrewsTable, truncateHakiListTable } from "../test_helper.ts";
+import {
+  createCrewsTable,
+  createHakiListTable,
+  dropTable,
+  truncateCrewsTable,
+  truncateHakiListTable,
+} from "../test_helper.ts";
 
 async function insertData() {
   await Haki.insert("Sovereign");

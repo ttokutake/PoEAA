@@ -13,7 +13,11 @@ import {
   CrewFinder,
   PopularityVoteService,
 } from "../../src/reading_in_data/finder.ts";
-import { createCrewsTable, dropTable, truncateCrewsTable } from "../test_helper.ts";
+import {
+  createCrewsTable,
+  dropTable,
+  truncateCrewsTable,
+} from "../test_helper.ts";
 
 async function insertData() {
   const crew = new Crew(0, "Luffy", BigInt(1_500_000_000), 0);

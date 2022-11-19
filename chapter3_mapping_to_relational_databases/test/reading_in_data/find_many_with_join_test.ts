@@ -9,7 +9,12 @@ import {
 } from "../../dev_deps.ts";
 
 import { Crew } from "../../src/reading_in_data/find_many_with_join.ts";
-import { createCrewsTable, createSpecialMovesTable, dropTable, truncateCrewsTable } from "../test_helper.ts";
+import {
+  createCrewsTable,
+  createSpecialMovesTable,
+  dropTable,
+  truncateCrewsTable,
+} from "../test_helper.ts";
 
 async function insertData() {
   const data = [

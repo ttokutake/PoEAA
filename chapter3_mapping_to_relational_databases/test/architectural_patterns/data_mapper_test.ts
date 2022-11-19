@@ -11,7 +11,11 @@ import {
 
 import { Crew } from "../../src/architectural_patterns/domain.ts";
 import { CrewMapper } from "../../src/architectural_patterns/data_mapper.ts";
-import { createCrewsTable, dropTable, truncateCrewsTable } from "../test_helper.ts";
+import {
+  createCrewsTable,
+  dropTable,
+  truncateCrewsTable,
+} from "../test_helper.ts";
 
 async function insertData() {
   const crewMapper = new CrewMapper();

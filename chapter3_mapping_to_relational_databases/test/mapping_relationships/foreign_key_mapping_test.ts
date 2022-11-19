@@ -12,7 +12,12 @@ import {
   Crew,
   SpecialMove,
 } from "../../src/mapping_relationships/foreign_key_mapping.ts";
-import { createCrewsTable, createSpecialMovesTable, dropTable, truncateCrewsTable } from "../test_helper.ts";
+import {
+  createCrewsTable,
+  createSpecialMovesTable,
+  dropTable,
+  truncateCrewsTable,
+} from "../test_helper.ts";
 
 async function insertData() {
   const crew = new Crew("Luffy", BigInt(1_500_000_000));

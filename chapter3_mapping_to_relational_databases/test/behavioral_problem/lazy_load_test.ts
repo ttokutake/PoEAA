@@ -9,7 +9,12 @@ import {
 } from "../../dev_deps.ts";
 
 import { Crew } from "../../src/behavioral_problem/lazy_load.ts";
-import { createCrewsTable, createSpecialMovesTable, dropTable, truncateCrewsTable } from "../test_helper.ts";
+import {
+  createCrewsTable,
+  createSpecialMovesTable,
+  dropTable,
+  truncateCrewsTable,
+} from "../test_helper.ts";
 
 async function insertData() {
   const crew = new Crew("Luffy", BigInt(1_500_000_000));

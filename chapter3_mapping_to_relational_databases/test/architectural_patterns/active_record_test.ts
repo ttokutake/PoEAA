@@ -10,7 +10,11 @@ import {
 } from "../../dev_deps.ts";
 
 import { Crew } from "../../src/architectural_patterns/active_record.ts";
-import { createCrewsTable, dropTable, truncateCrewsTable } from "../test_helper.ts";
+import {
+  createCrewsTable,
+  dropTable,
+  truncateCrewsTable,
+} from "../test_helper.ts";
 
 async function insertData() {
   const crew = new Crew("Nami", BigInt(60_000_000));

@@ -9,7 +9,11 @@ import {
 } from "../../dev_deps.ts";
 
 import { CrewGateway } from "../../src/architectural_patterns/table_data_gateway.ts";
-import { createCrewsTable, dropTable, truncateCrewsTable } from "../test_helper.ts";
+import {
+  createCrewsTable,
+  dropTable,
+  truncateCrewsTable,
+} from "../test_helper.ts";
 
 async function insertData() {
   const crewGateway = new CrewGateway();
