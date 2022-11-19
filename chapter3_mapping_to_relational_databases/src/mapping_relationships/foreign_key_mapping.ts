@@ -29,7 +29,7 @@ export class Crew {
 interface SpecialMoveRow {
   id: number;
   name: string;
-  crew_id: number;
+  crewId: number;
 }
 
 export class SpecialMove {
@@ -53,12 +53,12 @@ export class SpecialMove {
 
   static async findForCrew(crewId: number): Promise<SpecialMove[]> {
     const { rows } = await client.queryObject<SpecialMoveRow>`
-      SELECT id, name, crew_id
+      SELECT id, name, crew_id AS crewId
       FROM special_moves
       WHERE crew_id = ${crewId}
     `;
     const specialMoves = rows.map((row: SpecialMoveRow) => {
-      const specialMove = new SpecialMove(row.name, row.crew_id);
+      const specialMove = new SpecialMove(row.name, row.crewId);
       specialMove.id = row.id;
       return specialMove;
     });

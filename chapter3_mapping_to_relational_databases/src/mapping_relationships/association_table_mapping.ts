@@ -87,7 +87,7 @@ export class Crew {
 
   private static async findHaki(crew_id: number): Promise<Haki[]> {
     const { rows } = await client.queryObject<HakiRow>`
-      SELECT haki_id as id, name
+      SELECT haki_id AS id, name
       FROM crews_haki_list
       JOIN haki_list ON haki_list.id = crews_haki_list.haki_id
       WHERE crew_id = ${crew_id}
