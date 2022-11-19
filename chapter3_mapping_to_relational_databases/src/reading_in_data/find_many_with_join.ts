@@ -33,8 +33,8 @@ export class Crew {
 
   async addSpecialMove(name: string) {
     await client.queryArray`
-      INSERT INTO special_moves (crew_id, name)
-      VALUES (${this.id}, ${name})
+      INSERT INTO special_moves (name, crew_id)
+      VALUES (${name}, ${this.id})
     `;
   }
 
@@ -56,13 +56,13 @@ export class Crew {
   static async findMany(ids: number[]): Promise<Crew[]> {
     const { rows } = await client.queryObject<Row>(`
       SELECT
-        id,
+        crews.id AS id,
         crews.name AS name,
         bounty,
         special_moves.name AS special_move
       FROM crews
       JOIN special_moves ON special_moves.crew_id = crews.id
-      WHERE id IN (${ids.join(",")})
+      WHERE crews.id IN (${ids.join(",")})
     `);
     const crewsMap = rows.reduce((dict: { [id: number]: Crew }, row: Row) => {
       if (dict[row.id]) {

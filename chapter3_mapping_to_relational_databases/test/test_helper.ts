@@ -10,8 +10,9 @@ export async function createTable() {
   `;
   await client.queryArray`
     CREATE TABLE IF NOT EXISTS special_moves (
-      crew_id INTEGER,
+      id SERIAL PRIMARY KEY,
       name VARCHAR(256),
+      crew_id INTEGER,
     CONSTRAINT fk_crew
       FOREIGN KEY(crew_id)
         REFERENCES crews(id)

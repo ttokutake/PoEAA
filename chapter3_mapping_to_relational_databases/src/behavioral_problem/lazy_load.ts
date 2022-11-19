@@ -32,8 +32,8 @@ export class Crew {
 
   async addSpecialMove(name: string) {
     await client.queryArray`
-      INSERT INTO special_moves (crew_id, name)
-      VALUES (${this.id}, ${name})
+      INSERT INTO special_moves (name, crew_id)
+      VALUES (${name}, ${this.id})
     `;
   }
 
