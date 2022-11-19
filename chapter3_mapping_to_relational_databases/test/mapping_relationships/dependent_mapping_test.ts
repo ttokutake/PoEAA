@@ -9,7 +9,7 @@ import {
 } from "../../dev_deps.ts";
 
 import { Crew } from "../../src/mapping_relationships/dependent_mapping.ts";
-import { createTable, dropTable, truncateTable } from "../test_helper.ts";
+import { createCrewsTable, createSpecialMovesTable, dropTable, truncateCrewsTable } from "../test_helper.ts";
 
 async function insertData() {
   const crew = new Crew("Luffy", BigInt(1_500_000_000));
@@ -21,7 +21,8 @@ async function insertData() {
 
 describe("Crew", () => {
   beforeAll(async () => {
-    await createTable();
+    await createCrewsTable();
+    await createSpecialMovesTable();
   });
   afterAll(async () => {
     await dropTable();
@@ -31,7 +32,7 @@ describe("Crew", () => {
     await insertData();
   });
   afterEach(async () => {
-    await truncateTable();
+    await truncateCrewsTable();
   });
 
   it("specialMoves", async () => {

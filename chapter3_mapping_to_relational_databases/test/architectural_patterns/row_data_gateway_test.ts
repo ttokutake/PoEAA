@@ -10,7 +10,7 @@ import {
 } from "../../dev_deps.ts";
 
 import { CrewGateway } from "../../src/architectural_patterns/row_data_gateway.ts";
-import { createTable, dropTable, truncateTable } from "../test_helper.ts";
+import { createCrewsTable, dropTable, truncateCrewsTable } from "../test_helper.ts";
 
 async function insertData() {
   const data = new CrewGateway("Nami", BigInt(60_000_000));
@@ -19,7 +19,7 @@ async function insertData() {
 
 describe("CrewGateway", () => {
   beforeAll(async () => {
-    await createTable();
+    await createCrewsTable();
   });
   afterAll(async () => {
     await dropTable();
@@ -29,7 +29,7 @@ describe("CrewGateway", () => {
     await insertData();
   });
   afterEach(async () => {
-    await truncateTable();
+    await truncateCrewsTable();
   });
 
   it("update", async () => {

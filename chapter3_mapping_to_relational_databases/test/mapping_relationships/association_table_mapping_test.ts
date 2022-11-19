@@ -12,7 +12,7 @@ import {
   Crew,
   Haki,
 } from "../../src/mapping_relationships/association_table_mapping.ts";
-import { createTable, dropTable, truncateTable } from "../test_helper.ts";
+import { createCrewsTable, createHakiListTable, dropTable, truncateCrewsTable, truncateHakiListTable } from "../test_helper.ts";
 
 async function insertData() {
   await Haki.insert("Sovereign");
@@ -45,7 +45,8 @@ async function insertData() {
 
 describe("Crew", () => {
   beforeAll(async () => {
-    await createTable();
+    await createCrewsTable();
+    await createHakiListTable();
   });
   afterAll(async () => {
     await dropTable();
@@ -55,7 +56,8 @@ describe("Crew", () => {
     await insertData();
   });
   afterEach(async () => {
-    await truncateTable();
+    await truncateHakiListTable();
+    await truncateCrewsTable();
   });
 
   it("find", async () => {

@@ -9,7 +9,7 @@ import {
 } from "../../dev_deps.ts";
 
 import { CrewGateway } from "../../src/behavioral_problem/identity_map.ts";
-import { createTable, dropTable, truncateTable } from "../test_helper.ts";
+import { createCrewsTable, dropTable, truncateCrewsTable } from "../test_helper.ts";
 
 async function insertData() {
   const crewGateway = new CrewGateway();
@@ -18,7 +18,7 @@ async function insertData() {
 
 describe("CrewGateway", () => {
   beforeAll(async () => {
-    await createTable();
+    await createCrewsTable();
   });
   afterAll(async () => {
     await dropTable();
@@ -28,7 +28,7 @@ describe("CrewGateway", () => {
     await insertData();
   });
   afterEach(async () => {
-    await truncateTable();
+    await truncateCrewsTable();
   });
 
   it("find", async () => {

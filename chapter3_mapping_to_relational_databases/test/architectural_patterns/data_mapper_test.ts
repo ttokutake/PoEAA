@@ -11,7 +11,7 @@ import {
 
 import { Crew } from "../../src/architectural_patterns/domain.ts";
 import { CrewMapper } from "../../src/architectural_patterns/data_mapper.ts";
-import { createTable, dropTable, truncateTable } from "../test_helper.ts";
+import { createCrewsTable, dropTable, truncateCrewsTable } from "../test_helper.ts";
 
 async function insertData() {
   const crewMapper = new CrewMapper();
@@ -21,7 +21,7 @@ async function insertData() {
 
 describe("CrewMapper", () => {
   beforeAll(async () => {
-    await createTable();
+    await createCrewsTable();
   });
   afterAll(async () => {
     await dropTable();
@@ -31,7 +31,7 @@ describe("CrewMapper", () => {
     await insertData();
   });
   afterEach(async () => {
-    await truncateTable();
+    await truncateCrewsTable();
   });
 
   it("update", async () => {

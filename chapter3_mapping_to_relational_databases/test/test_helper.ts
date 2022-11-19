@@ -1,6 +1,6 @@
 import { client } from "../src/postgres_client.ts";
 
-export async function createTable() {
+export async function createCrewsTable() {
   await client.queryArray`
     CREATE TABLE IF NOT EXISTS crews (
       id SERIAL PRIMARY KEY,
@@ -8,6 +8,9 @@ export async function createTable() {
       bounty BIGINT
     )
   `;
+}
+
+export async function createSpecialMovesTable() {
   await client.queryArray`
     CREATE TABLE IF NOT EXISTS special_moves (
       id SERIAL PRIMARY KEY,
@@ -18,6 +21,9 @@ export async function createTable() {
           REFERENCES crews(id)
     )
   `;
+}
+
+export async function createHakiListTable() {
   await client.queryArray`
     CREATE TABLE IF NOT EXISTS haki_list (
       id SERIAL PRIMARY KEY,
@@ -39,12 +45,15 @@ export async function createTable() {
   `;
 }
 
-export async function truncateTable() {
-  await client.queryArray`
-    TRUNCATE TABLE haki_list RESTART IDENTITY CASCADE
-  `;
+export async function truncateCrewsTable() {
   await client.queryArray`
     TRUNCATE TABLE crews RESTART IDENTITY CASCADE
+  `;
+}
+
+export async function truncateHakiListTable() {
+  await client.queryArray`
+    TRUNCATE TABLE haki_list RESTART IDENTITY CASCADE
   `;
 }
 

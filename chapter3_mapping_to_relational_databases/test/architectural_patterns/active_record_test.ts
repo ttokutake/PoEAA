@@ -10,7 +10,7 @@ import {
 } from "../../dev_deps.ts";
 
 import { Crew } from "../../src/architectural_patterns/active_record.ts";
-import { createTable, dropTable, truncateTable } from "../test_helper.ts";
+import { createCrewsTable, dropTable, truncateCrewsTable } from "../test_helper.ts";
 
 async function insertData() {
   const crew = new Crew("Nami", BigInt(60_000_000));
@@ -19,7 +19,7 @@ async function insertData() {
 
 describe("Crew", () => {
   beforeAll(async () => {
-    await createTable();
+    await createCrewsTable();
   });
   afterAll(async () => {
     await dropTable();
@@ -29,7 +29,7 @@ describe("Crew", () => {
     await insertData();
   });
   afterEach(async () => {
-    await truncateTable();
+    await truncateCrewsTable();
   });
 
   it("update", async () => {

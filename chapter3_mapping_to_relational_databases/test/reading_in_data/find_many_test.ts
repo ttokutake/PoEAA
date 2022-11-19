@@ -9,7 +9,7 @@ import {
 } from "../../dev_deps.ts";
 
 import { CrewGateway } from "../../src/reading_in_data/find_many.ts";
-import { createTable, dropTable, truncateTable } from "../test_helper.ts";
+import { createCrewsTable, dropTable, truncateCrewsTable } from "../test_helper.ts";
 
 async function insertData() {
   const data = [
@@ -24,7 +24,7 @@ async function insertData() {
 
 describe("CrewFinder", () => {
   beforeAll(async () => {
-    await createTable();
+    await createCrewsTable();
   });
   afterAll(async () => {
     await dropTable();
@@ -34,7 +34,7 @@ describe("CrewFinder", () => {
     await insertData();
   });
   afterEach(async () => {
-    await truncateTable();
+    await truncateCrewsTable();
   });
 
   it("findManyInGoodWay", async () => {
