@@ -7,15 +7,15 @@ interface CrewsRow {
 }
 
 export class CrewGateway {
-  private id = 0;
+  private _id = 0;
 
   constructor(
     public name: string,
     public bounty: bigint,
   ) {}
 
-  getId(): number {
-    return this.id;
+  get id(): number {
+    return this._id;
   }
 
   async insert(): Promise<void> {
@@ -51,7 +51,7 @@ export class CrewGateway {
       throw new Error("Record Not Found");
     }
     const crewGateway = new CrewGateway(row.name, row.bounty);
-    crewGateway.id = row.id;
+    crewGateway._id = row.id;
     return crewGateway;
   }
 }

@@ -1,14 +1,14 @@
 import { client } from "../postgres_client.ts";
 
 abstract class Person {
-  protected id = 0;
+  protected _id = 0;
 
   constructor(
     public name: string,
   ) {}
 
-  getId(): number {
-    return this.id;
+  get id(): number {
+    return this._id;
   }
 }
 
@@ -44,7 +44,7 @@ export class Pirate extends Person {
       throw new Error("Record Not Found");
     }
     const pirate = new Pirate(row.name, row.role);
-    pirate.id = row.id;
+    pirate._id = row.id;
     return pirate;
   }
 }
@@ -81,7 +81,7 @@ export class Marine extends Person {
       throw new Error("Record Not Found");
     }
     const marine = new Marine(row.name, row.rank);
-    marine.id = row.id;
+    marine._id = row.id;
     return marine;
   }
 }

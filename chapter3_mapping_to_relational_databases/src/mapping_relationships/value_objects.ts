@@ -22,15 +22,15 @@ interface CrewsRow {
 }
 
 export class CrewGateway {
-  private id = 0;
+  private _id = 0;
 
   constructor(
     public name: string,
     public bounty: Money,
   ) {}
 
-  getId(): number {
-    return this.id;
+  get id(): number {
+    return this._id;
   }
 
   async insert(): Promise<void> {
@@ -56,7 +56,7 @@ export class CrewGateway {
     }
     const bounty = new Money(row.bounty_amount, row.bounty_currency);
     const crewGateway = new CrewGateway(row.name, bounty);
-    crewGateway.id = row.id;
+    crewGateway._id = row.id;
     return crewGateway;
   }
 }

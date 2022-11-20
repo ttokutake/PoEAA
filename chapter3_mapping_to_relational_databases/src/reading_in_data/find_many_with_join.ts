@@ -8,7 +8,7 @@ interface Row {
 }
 
 export class Crew {
-  private id = 0;
+  private _id = 0;
   private specialMoves: string[] = [];
 
   constructor(
@@ -16,8 +16,8 @@ export class Crew {
     public bounty: bigint,
   ) {}
 
-  getId(): number {
-    return this.id;
+  get id(): number {
+    return this._id;
   }
 
   getSpecialMoves(): string[] {
@@ -49,7 +49,7 @@ export class Crew {
       throw new Error("Record Not Found");
     }
     const crew = new Crew(row.name, row.bounty);
-    crew.id = id;
+    crew._id = id;
     return crew;
   }
 
@@ -72,7 +72,7 @@ export class Crew {
       }
 
       const crew = new Crew(row.name, row.bounty);
-      crew.id = row.id;
+      crew._id = row.id;
       crew.specialMoves = [row.special_move];
       dict[row.id] = crew;
       return dict;

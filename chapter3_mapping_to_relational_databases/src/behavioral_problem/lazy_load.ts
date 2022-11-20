@@ -11,7 +11,7 @@ interface SpecialMove {
 }
 
 export class Crew {
-  private id = 0;
+  private _id = 0;
   private specialMovesSource: string[] | null = null;
 
   constructor(
@@ -19,8 +19,8 @@ export class Crew {
     public bounty: bigint,
   ) {}
 
-  getId(): number {
-    return this.id;
+  get id(): number {
+    return this._id;
   }
 
   async insert(): Promise<void> {
@@ -63,7 +63,7 @@ export class Crew {
       throw new Error("Record Not Found");
     }
     const crew = new Crew(row.name, row.bounty);
-    crew.id = row.id;
+    crew._id = row.id;
     return crew;
   }
 }

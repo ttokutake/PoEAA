@@ -9,14 +9,14 @@ interface PeopleRow {
 
 abstract class Person {
   protected static type = "";
-  protected id = 0;
+  protected _id = 0;
 
   constructor(
     public name: string,
   ) {}
 
-  getId(): number {
-    return this.id;
+  get id(): number {
+    return this._id;
   }
 }
 
@@ -51,7 +51,7 @@ export class Pirate extends Person {
       throw new Error('Pirate must have "role"');
     }
     const pirate = new Pirate(row.name, row.role);
-    pirate.id = row.id;
+    pirate._id = row.id;
     return pirate;
   }
 }
@@ -87,7 +87,7 @@ export class Marine extends Person {
       throw new Error('Pirate must have "rank"');
     }
     const marine = new Marine(row.name, row.rank);
-    marine.id = row.id;
+    marine._id = row.id;
     return marine;
   }
 }

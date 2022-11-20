@@ -7,12 +7,12 @@ interface HakiListRow {
 
 export class Haki {
   constructor(
-    private id: number,
+    private _id: number,
     public name: string,
   ) {}
 
-  getId(): number {
-    return this.id;
+  get id(): number {
+    return this._id;
   }
 
   static async insert(name: string): Promise<void> {
@@ -43,7 +43,7 @@ interface CrewsRow {
 }
 
 export class Crew {
-  private id = 0;
+  private _id = 0;
   public hakiList: Haki[] = [];
 
   constructor(
@@ -51,8 +51,8 @@ export class Crew {
     public bounty: bigint,
   ) {}
 
-  getId(): number {
-    return this.id;
+  get id(): number {
+    return this._id;
   }
 
   async insert(): Promise<void> {
@@ -65,7 +65,7 @@ export class Crew {
   async addHaki(haki: Haki) {
     await client.queryArray`
       INSERT INTO crews_haki_list (crew_id, haki_id)
-      VALUES (${this.id}, ${haki.getId()})
+      VALUES (${this.id}, ${haki.id})
     `;
   }
 
@@ -80,7 +80,7 @@ export class Crew {
       throw new Error("Record Not Found");
     }
     const crew = new Crew(row.name, row.bounty);
-    crew.id = row.id;
+    crew._id = row.id;
     crew.hakiList = await this.findHaki(crew.id);
     return crew;
   }

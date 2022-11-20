@@ -1,12 +1,12 @@
 export class Crew {
   constructor(
-    private id: number,
+    private _id: number,
     public name: string,
     public bounty: bigint,
   ) {}
 
-  getId(): number {
-    return this.id;
+  get id(): number {
+    return this._id;
   }
 
   isDanger(): boolean {

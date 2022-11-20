@@ -2,14 +2,14 @@ import { client } from "../postgres_client.ts";
 
 export class Crew {
   constructor(
-    private id: number,
+    private _id: number,
     public name: string,
     public bounty: bigint,
     public ranking: number,
   ) {}
 
-  getId(): number {
-    return this.id;
+  get id(): number {
+    return this._id;
   }
 
   async insert(): Promise<void> {

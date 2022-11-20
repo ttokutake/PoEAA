@@ -20,14 +20,14 @@ export class CrewMapper {
     await client.queryArray`
       UPDATE crews
       SET name=${crew.name}, bounty=${crew.bounty}
-      WHERE id=${crew.getId()}
+      WHERE id=${crew.id}
     `;
   }
 
   async delete(crew: Crew): Promise<void> {
     await client.queryArray`
       DELETE FROM crews
-      WHERE id=${crew.getId()}
+      WHERE id=${crew.id}
     `;
   }
 

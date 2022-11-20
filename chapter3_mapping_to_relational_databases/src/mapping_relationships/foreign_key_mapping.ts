@@ -7,15 +7,15 @@ interface CrewsRow {
 }
 
 export class Crew {
-  private id = 0;
+  private _id = 0;
 
   constructor(
     public name: string,
     public bounty: bigint,
   ) {}
 
-  getId(): number {
-    return this.id;
+  get id(): number {
+    return this._id;
   }
 
   async insert(): Promise<void> {
@@ -33,15 +33,15 @@ interface SpecialMovesRow {
 }
 
 export class SpecialMove {
-  private id = 0;
+  private _id = 0;
 
   constructor(
     public name: string,
     public crewId: number,
   ) {}
 
-  getId() {
-    return this.id;
+  get id(): number {
+    return this._id;
   }
 
   async insert() {
@@ -59,7 +59,7 @@ export class SpecialMove {
     `;
     const specialMoves = rows.map((row: SpecialMovesRow) => {
       const specialMove = new SpecialMove(row.name, row.crew_id);
-      specialMove.id = row.id;
+      specialMove._id = row.id;
       return specialMove;
     });
     return specialMoves;
