@@ -1,0 +1,16 @@
+{
+  "crew": {
+    "table": "crews",
+    "fields": [
+      { "name": "name", "column": "name" },
+      { "name": "bounty", "column": "bounty" }
+    ]
+  },
+  "special_move": {
+    "table": "special_moves",
+    "fields": [
+      { "name": "name", "column": "name" },
+      { "name": "crewId", "column": "crew_id" }
+    ]
+  }
+}

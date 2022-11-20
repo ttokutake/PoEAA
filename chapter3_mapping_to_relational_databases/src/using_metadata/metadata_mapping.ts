@@ -1,21 +1,5 @@
 import { client } from "../postgres_client.ts";
-
-const config = {
-  "crew": {
-    table: "crews",
-    fields: [
-      { name: "name", column: "name" },
-      { name: "bounty", column: "bounty" },
-    ],
-  },
-  "special_move": {
-    table: "special_moves",
-    fields: [
-      { name: "name", column: "name" },
-      { name: "crewId", column: "crew_id" },
-    ],
-  },
-};
+import { dirname, fromFileUrl } from "../../deps.ts";
 
 interface ConfigField {
   name: string;
@@ -74,6 +58,10 @@ abstract class Base {
     return instance;
   }
 }
+
+const __dirname = dirname(fromFileUrl(import.meta.url));
+const configJson = await Deno.readTextFile(`${__dirname}/config.json`);
+const config = JSON.parse(configJson);
 
 export class Crew extends Base {
   protected static table = config.crew.table;

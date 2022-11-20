@@ -2,5 +2,5 @@
 
 ```
 $ docker-compose run --rm develop bash
-$ deno test --allow-net
+$ deno test --allow-net --allow-read
 ```
