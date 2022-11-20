@@ -28,7 +28,7 @@ abstract class Base {
   async insert(): Promise<void> {
     const self = <typeof Base> this.constructor;
     const columnNames = self.fields.map(({ column }) => column);
-    const placeholders = columnNames.map((_v, i) => `$${i + 1}`);
+    const placeholders = self.fields.map((_v, i) => `$${i + 1}`);
     const values = self.fields.map(({ name }) => this[name]);
 
     await client.queryArray(
