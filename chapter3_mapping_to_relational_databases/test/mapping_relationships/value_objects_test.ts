@@ -46,9 +46,9 @@ describe("CrewGateway", () => {
     await client.queryArray`
       CREATE TABLE IF NOT EXISTS crews (
         id SERIAL PRIMARY KEY,
-        name VARCHAR(256),
-        bounty_amount BIGINT,
-        bounty_currency VARCHAR(256)
+        name VARCHAR(256) NOT NULL,
+        bounty_amount BIGINT NOT NULL,
+        bounty_currency VARCHAR(256) NOT NULL
       )
     `;
   });

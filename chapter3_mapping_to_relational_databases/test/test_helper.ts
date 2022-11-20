@@ -4,8 +4,8 @@ export async function createCrewsTable() {
   await client.queryArray`
     CREATE TABLE IF NOT EXISTS crews (
       id SERIAL PRIMARY KEY,
-      name VARCHAR(256),
-      bounty BIGINT
+      name VARCHAR(256) NOT NULL,
+      bounty BIGINT NOT NULL
     )
   `;
 }
@@ -14,8 +14,8 @@ export async function createSpecialMovesTable() {
   await client.queryArray`
     CREATE TABLE IF NOT EXISTS special_moves (
       id SERIAL PRIMARY KEY,
-      name VARCHAR(256),
-      crew_id INTEGER,
+      name VARCHAR(256) NOT NULL,
+      crew_id INTEGER NOT NULL,
       CONSTRAINT fk_crew
         FOREIGN KEY(crew_id)
           REFERENCES crews(id)
@@ -27,14 +27,14 @@ export async function createHakiListTable() {
   await client.queryArray`
     CREATE TABLE IF NOT EXISTS haki_list (
       id SERIAL PRIMARY KEY,
-      name VARCHAR(256),
+      name VARCHAR(256) NOT NULL,
       UNIQUE(name)
     )
   `;
   await client.queryArray`
     CREATE TABLE IF NOT EXISTS crews_haki_list (
-      crew_id INTEGER,
-      haki_id INTEGER,
+      crew_id INTEGER NOT NULL,
+      haki_id INTEGER NOT NULL,
       CONSTRAINT fk_crew
         FOREIGN KEY(crew_id)
           REFERENCES crews(id),
