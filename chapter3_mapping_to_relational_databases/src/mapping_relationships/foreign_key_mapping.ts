@@ -1,6 +1,6 @@
 import { client } from "../postgres_client.ts";
 
-interface CrewRow {
+interface CrewsRow {
   id: number;
   name: string;
   bounty: bigint;
@@ -26,7 +26,7 @@ export class Crew {
   }
 }
 
-interface SpecialMoveRow {
+interface SpecialMovesRow {
   id: number;
   name: string;
   crew_id: number;
@@ -52,12 +52,12 @@ export class SpecialMove {
   }
 
   static async findForCrew(crewId: number): Promise<SpecialMove[]> {
-    const { rows } = await client.queryObject<SpecialMoveRow>`
+    const { rows } = await client.queryObject<SpecialMovesRow>`
       SELECT id, name, crew_id
       FROM special_moves
       WHERE crew_id = ${crewId}
     `;
-    const specialMoves = rows.map((row: SpecialMoveRow) => {
+    const specialMoves = rows.map((row: SpecialMovesRow) => {
       const specialMove = new SpecialMove(row.name, row.crew_id);
       specialMove.id = row.id;
       return specialMove;

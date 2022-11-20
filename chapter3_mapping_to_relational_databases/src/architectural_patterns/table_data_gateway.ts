@@ -1,12 +1,12 @@
 import { client } from "../postgres_client.ts";
 
-interface Row {
+interface CrewsRow {
   id: number;
   name: string;
   bounty: bigint;
 }
 
-type RecordSet = Row[];
+type RecordSet = CrewsRow[];
 
 export class CrewGateway {
   async insert(name: string, bounty: bigint): Promise<void> {
@@ -32,7 +32,7 @@ export class CrewGateway {
   }
 
   async find(id: number): Promise<RecordSet> {
-    const { rows } = await client.queryObject<Row>`
+    const { rows } = await client.queryObject<CrewsRow>`
       SELECT id, name, bounty
       FROM crews
       WHERE id = ${id}

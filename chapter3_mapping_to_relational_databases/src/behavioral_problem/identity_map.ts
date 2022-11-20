@@ -1,15 +1,15 @@
 import { client } from "../postgres_client.ts";
 
-interface Row {
+interface CrewsRow {
   id: number;
   name: string;
   bounty: bigint;
 }
 
-type RecordSet = Row[];
+type RecordSet = CrewsRow[];
 
 export class CrewGateway {
-  private identityMap: { [id: number]: Row } = {};
+  private identityMap: { [id: number]: CrewsRow } = {};
 
   async insert(name: string, bounty: bigint): Promise<void> {
     await client.queryArray`
@@ -30,7 +30,7 @@ export class CrewGateway {
       return [this.identityMap[id]];
     }
 
-    const { rows } = await client.queryObject<Row>`
+    const { rows } = await client.queryObject<CrewsRow>`
       SELECT id, name, bounty
       FROM crews
       WHERE id = ${id}

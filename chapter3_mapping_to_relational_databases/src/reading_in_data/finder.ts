@@ -28,7 +28,7 @@ export interface PopularityVoteService {
   getRanking: (id: number) => Promise<number>;
 }
 
-interface Row {
+interface CrewsRow {
   id: number;
   name: string;
   bounty: bigint;
@@ -40,7 +40,7 @@ export class CrewFinder {
   ) {}
 
   async find(id: number): Promise<Crew> {
-    const { rows: [row] } = await client.queryObject<Row>`
+    const { rows: [row] } = await client.queryObject<CrewsRow>`
       SELECT id, name, bounty
       FROM crews
       WHERE id = ${id}

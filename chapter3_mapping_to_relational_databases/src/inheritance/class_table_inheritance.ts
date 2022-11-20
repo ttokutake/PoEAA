@@ -34,7 +34,7 @@ abstract class Person {
   }
 }
 
-interface PirateRow {
+interface PiratesRow {
   id: number;
   name: string;
   role: string;
@@ -58,7 +58,7 @@ export class Pirate extends Person {
   }
 
   static async find(id: number): Promise<Pirate> {
-    const { rows: [row] } = await client.queryObject<PirateRow>`
+    const { rows: [row] } = await client.queryObject<PiratesRow>`
       SELECT id, name, role
       FROM people
       INNER JOIN pirates
@@ -75,7 +75,7 @@ export class Pirate extends Person {
   }
 }
 
-interface MarineRow {
+interface MarinesRow {
   id: number;
   name: string;
   rank: string;
@@ -99,7 +99,7 @@ export class Marine extends Person {
   }
 
   static async find(id: number): Promise<Marine> {
-    const { rows: [row] } = await client.queryObject<MarineRow>`
+    const { rows: [row] } = await client.queryObject<MarinesRow>`
       SELECT id, name, rank
       FROM people
       INNER JOIN marines

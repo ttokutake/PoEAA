@@ -1,6 +1,6 @@
 import { client } from "../postgres_client.ts";
 
-interface HakiRow {
+interface HakiListRow {
   id: number;
   name: string;
 }
@@ -23,7 +23,7 @@ export class Haki {
   }
 
   static async findByName(name: string): Promise<Haki> {
-    const { rows: [row] } = await client.queryObject<HakiRow>`
+    const { rows: [row] } = await client.queryObject<HakiListRow>`
       SELECT id, name
       FROM haki_list
       WHERE name = ${name}
@@ -36,7 +36,7 @@ export class Haki {
   }
 }
 
-interface CrewRow {
+interface CrewsRow {
   id: number;
   name: string;
   bounty: bigint;
@@ -70,7 +70,7 @@ export class Crew {
   }
 
   static async find(id: number): Promise<Crew> {
-    const { rows: [row] } = await client.queryObject<CrewRow>`
+    const { rows: [row] } = await client.queryObject<CrewsRow>`
       SELECT id, name, bounty
       FROM crews
       WHERE id = ${id}
@@ -86,13 +86,15 @@ export class Crew {
   }
 
   private static async findHaki(crew_id: number): Promise<Haki[]> {
-    const { rows } = await client.queryObject<HakiRow>`
+    const { rows } = await client.queryObject<HakiListRow>`
       SELECT haki_id AS id, name
       FROM crews_haki_list
       JOIN haki_list ON haki_list.id = crews_haki_list.haki_id
       WHERE crew_id = ${crew_id}
     `;
-    const hakiList = rows.map(({ id, name }: HakiRow) => new Haki(id, name));
+    const hakiList = rows.map(({ id, name }: HakiListRow) =>
+      new Haki(id, name)
+    );
     return hakiList;
   }
 }

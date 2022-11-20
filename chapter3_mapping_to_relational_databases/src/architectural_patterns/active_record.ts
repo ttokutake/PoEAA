@@ -1,6 +1,6 @@
 import { client } from "../postgres_client.ts";
 
-interface Row {
+interface CrewsRow {
   id: number;
   name: string;
   bounty: bigint;
@@ -41,7 +41,7 @@ export class Crew {
   }
 
   static async find(id: number): Promise<Crew> {
-    const { rows: [row] } = await client.queryObject<Row>`
+    const { rows: [row] } = await client.queryObject<CrewsRow>`
       SELECT id, name, bounty
       FROM crews
       WHERE id = ${id}

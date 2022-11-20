@@ -14,7 +14,7 @@ export class Money {
   }
 }
 
-interface Row {
+interface CrewsRow {
   id: number;
   name: string;
   bounty_amount: bigint;
@@ -41,7 +41,7 @@ export class CrewGateway {
   }
 
   static async find(id: number): Promise<CrewGateway> {
-    const { rows: [row] } = await client.queryObject<Row>`
+    const { rows: [row] } = await client.queryObject<CrewsRow>`
       SELECT
         id,
         name,
