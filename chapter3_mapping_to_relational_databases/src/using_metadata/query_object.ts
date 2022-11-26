@@ -87,9 +87,9 @@ abstract class BaseModel {
   }
 
   static async findBy(whereClause: string): Promise<BaseModel[]> {
-    const columnNames = this.fields.map(({ column }) => column);
+    const columnNames = this.allFields.map(({ column }) => column);
     const { rows } = await client.queryArray(`
-      SELECT ${this.idField.column}, ${columnNames.join(",")}
+      SELECT ${columnNames.join(",")}
       FROM ${this.table}
       WHERE ${whereClause}
     `);
