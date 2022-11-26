@@ -12,7 +12,7 @@ interface SpecialMove {
 
 export class Crew {
   private _id = 0;
-  private specialMovesSource: string[] | null = null;
+  private _specialMoves: string[] | null = null;
 
   constructor(
     public name: string,
@@ -38,8 +38,8 @@ export class Crew {
   }
 
   async specialMoves(): Promise<string[]> {
-    if (this.specialMovesSource) {
-      return this.specialMovesSource;
+    if (this._specialMoves) {
+      return this._specialMoves;
     }
 
     const { rows } = await client.queryObject<SpecialMove>`
@@ -47,9 +47,9 @@ export class Crew {
       FROM special_moves
       WHERE crew_id = ${this.id}
     `;
-    this.specialMovesSource = rows.map(({ name }) => name);
+    this._specialMoves = rows.map(({ name }) => name);
 
-    return this.specialMovesSource;
+    return this._specialMoves;
   }
 
   static async find(id: number): Promise<Crew> {
