@@ -28,7 +28,7 @@ export class QueryObject {
   private criteria: Criteria[] = [];
 
   constructor(
-    private klass: typeof Base,
+    private klass: typeof BaseModel,
   ) {}
 
   addCriteria(criteria: Criteria): void {
@@ -48,7 +48,7 @@ interface ConfigField {
   column: string;
 }
 
-abstract class Base {
+abstract class BaseModel {
   protected static table: string;
   protected static fields: ConfigField[];
 
@@ -62,7 +62,7 @@ abstract class Base {
   }
 
   constructor(...values: unknown[]) {
-    (<typeof Base> this.constructor).fields.forEach((field, index) => {
+    (<typeof BaseModel> this.constructor).fields.forEach((field, index) => {
       this[field.name] = values[index];
     });
   }
@@ -72,7 +72,7 @@ abstract class Base {
   }
 
   async insert(): Promise<void> {
-    const self = <typeof Base> this.constructor;
+    const self = <typeof BaseModel> this.constructor;
     const columnNames = self.fields.map(({ column }) => column);
     const placeholders = self.fields.map((_v, i) => `$${i + 1}`);
     const values = self.fields.map(({ name }) => this[name]);
@@ -86,7 +86,7 @@ abstract class Base {
     );
   }
 
-  static async findBy(whereClause: string): Promise<Base[]> {
+  static async findBy(whereClause: string): Promise<BaseModel[]> {
     const columnNames = this.fields.map(({ column }) => column);
     const { rows } = await client.queryArray(`
       SELECT ${this.idField.column}, ${columnNames.join(",")}
@@ -108,12 +108,12 @@ const __dirname = dirname(fromFileUrl(import.meta.url));
 const configJson = await Deno.readTextFile(`${__dirname}/config.json`);
 const config = JSON.parse(configJson);
 
-export class Crew extends Base {
+export class Crew extends BaseModel {
   protected static table = config.crew.table;
   protected static fields: ConfigField[] = config.crew.fields;
 }
 
-export class SpecialMove extends Base {
+export class SpecialMove extends BaseModel {
   protected static table = config.special_move.table;
   protected static fields: ConfigField[] = config.special_move.fields;
 }

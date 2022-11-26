@@ -27,7 +27,7 @@ async function insertData() {
   await specialMove.insert();
 }
 
-describe("Base", () => {
+describe("BaseModel", () => {
   beforeAll(async () => {
     await createCrewsTable();
     await createSpecialMovesTable();
