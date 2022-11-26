@@ -2,6 +2,7 @@ import {
   afterAll,
   afterEach,
   assertEquals,
+  assertObjectMatch,
   beforeAll,
   beforeEach,
   describe,
@@ -60,15 +61,18 @@ describe("Crew", () => {
   it("findMany", async () => {
     const crews = await Crew.findMany([1, 2]);
 
-    assertEquals(crews[0].name, "Luffy");
-    assertEquals(crews[0].bounty, BigInt(1_500_000_000));
+    assertObjectMatch(crews[0], {
+      name: "Luffy",
+      bounty: BigInt(1_500_000_000),
+    });
     assertEquals(crews[0].specialMoves, [
       "Gum-Gum Pistol",
       "Gum-Gum Bazooka",
     ]);
-
-    assertEquals(crews[1].name, "Zoro");
-    assertEquals(crews[1].bounty, BigInt(320_000_000));
+    assertObjectMatch(crews[1], {
+      name: "Zoro",
+      bounty: BigInt(320_000_000),
+    });
     assertEquals(crews[1].specialMoves, ["Oni Giri", "Tora Gari"]);
   });
 });

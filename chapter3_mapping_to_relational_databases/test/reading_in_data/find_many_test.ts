@@ -1,7 +1,7 @@
 import {
   afterAll,
   afterEach,
-  assertEquals,
+  assertObjectMatch,
   beforeAll,
   beforeEach,
   describe,
@@ -44,20 +44,26 @@ describe("CrewGateway", () => {
   it("findManyInGoodWay", async () => {
     const crewGateways = await CrewGateway.findManyInGoodWay([1, 2]);
 
-    assertEquals(crewGateways[0].name, "Luffy");
-    assertEquals(crewGateways[0].bounty, BigInt(1_500_000_000));
-
-    assertEquals(crewGateways[1].name, "Zoro");
-    assertEquals(crewGateways[1].bounty, BigInt(320_000_000));
+    assertObjectMatch(crewGateways[0], {
+      name: "Luffy",
+      bounty: BigInt(1_500_000_000),
+    });
+    assertObjectMatch(crewGateways[1], {
+      name: "Zoro",
+      bounty: BigInt(320_000_000),
+    });
   });
 
   it("findManyInBadWay", async () => {
     const crewGateways = await CrewGateway.findManyInBadWay([1, 2]);
 
-    assertEquals(crewGateways[0].name, "Luffy");
-    assertEquals(crewGateways[0].bounty, BigInt(1_500_000_000));
-
-    assertEquals(crewGateways[1].name, "Zoro");
-    assertEquals(crewGateways[1].bounty, BigInt(320_000_000));
+    assertObjectMatch(crewGateways[0], {
+      name: "Luffy",
+      bounty: BigInt(1_500_000_000),
+    });
+    assertObjectMatch(crewGateways[1], {
+      name: "Zoro",
+      bounty: BigInt(320_000_000),
+    });
   });
 });
