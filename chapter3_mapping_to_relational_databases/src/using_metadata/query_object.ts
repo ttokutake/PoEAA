@@ -1,6 +1,11 @@
 import { client } from "../postgres_client.ts";
 import { dirname, fromFileUrl } from "../../deps.ts";
 
+interface ConfigField {
+  name: string;
+  column: string;
+}
+
 export class Criteria {
   private constructor(
     private sqlOperator: string,
@@ -41,11 +46,6 @@ export class QueryObject {
     );
     return conditions.join(" AND ");
   }
-}
-
-interface ConfigField {
-  name: string;
-  column: string;
 }
 
 abstract class BaseModel {

@@ -3,6 +3,11 @@ import { dirname, fromFileUrl } from "../../deps.ts";
 
 import { Crew, SpecialMove } from "./domain.ts";
 
+interface ConfigField {
+  name: string;
+  column: string;
+}
+
 export class Criteria {
   private constructor(
     private sqlOperator: string,
@@ -43,11 +48,6 @@ export class QueryObject {
     );
     return conditions.join(" AND ");
   }
-}
-
-interface ConfigField {
-  name: string;
-  column: string;
 }
 
 abstract class BaseMapper {
