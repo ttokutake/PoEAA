@@ -9,7 +9,7 @@ interface Row {
 
 export class Crew {
   private _id = 0;
-  private specialMoves: string[] = [];
+  private _specialMoves: string[] = [];
 
   constructor(
     public name: string,
@@ -20,8 +20,8 @@ export class Crew {
     return this._id;
   }
 
-  getSpecialMoves(): string[] {
-    return this.specialMoves;
+  get specialMoves(): string[] {
+    return this._specialMoves;
   }
 
   async insert(): Promise<void> {
@@ -67,13 +67,13 @@ export class Crew {
     const crewsMap = rows.reduce((dict: { [id: number]: Crew }, row: Row) => {
       if (dict[row.id]) {
         const crew = dict[row.id];
-        crew.specialMoves = [...crew.specialMoves, row.special_move];
+        crew._specialMoves = [...crew.specialMoves, row.special_move];
         return dict;
       }
 
       const crew = new Crew(row.name, row.bounty);
       crew._id = row.id;
-      crew.specialMoves = [row.special_move];
+      crew._specialMoves = [row.special_move];
       dict[row.id] = crew;
       return dict;
     }, {});

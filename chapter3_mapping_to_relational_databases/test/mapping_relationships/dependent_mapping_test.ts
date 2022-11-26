@@ -43,6 +43,6 @@ describe("Crew", () => {
   it("specialMoves", async () => {
     const crew = await Crew.find(1);
 
-    assertEquals(crew.getSpecialMoves(), ["Gum-Gum Pistol", "Gum-Gum Bazooka"]);
+    assertEquals(crew.specialMoves, ["Gum-Gum Pistol", "Gum-Gum Bazooka"]);
   });
 });

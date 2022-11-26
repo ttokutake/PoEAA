@@ -12,7 +12,7 @@ interface SpecialMove {
 
 export class Crew {
   private _id = 0;
-  private specialMoves: string[] = [];
+  private _specialMoves: string[] = [];
 
   constructor(
     public name: string,
@@ -23,7 +23,7 @@ export class Crew {
     return this._id;
   }
 
-  getSpecialMoves(): string[] {
+  get specialMoves(): string[] {
     return this.specialMoves;
   }
 
@@ -53,7 +53,7 @@ export class Crew {
     }
     const crew = new Crew(row.name, row.bounty);
     crew._id = row.id;
-    crew.specialMoves = await this.findSpecialMoves(crew.id);
+    crew._specialMoves = await this.findSpecialMoves(crew.id);
     return crew;
   }
 

@@ -62,13 +62,13 @@ describe("Crew", () => {
 
     assertEquals(crews[0].name, "Luffy");
     assertEquals(crews[0].bounty, BigInt(1_500_000_000));
-    assertEquals(crews[0].getSpecialMoves(), [
+    assertEquals(crews[0].specialMoves, [
       "Gum-Gum Pistol",
       "Gum-Gum Bazooka",
     ]);
 
     assertEquals(crews[1].name, "Zoro");
     assertEquals(crews[1].bounty, BigInt(320_000_000));
-    assertEquals(crews[1].getSpecialMoves(), ["Oni Giri", "Tora Gari"]);
+    assertEquals(crews[1].specialMoves, ["Oni Giri", "Tora Gari"]);
   });
 });

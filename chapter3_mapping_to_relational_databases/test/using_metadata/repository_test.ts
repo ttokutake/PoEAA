@@ -72,7 +72,6 @@ describe("CrewRepository", () => {
 
     assertEquals(crew.name, "Luffy");
     assertEquals(crew.bounty, BigInt(1_500_000_000));
-    assertEquals(crew.specialMoves[0], "Gum-Gum Pistol");
-    assertEquals(crew.specialMoves[1], "Gum-Gum Bazooka");
+    assertEquals(crew.specialMoves, ["Gum-Gum Pistol", "Gum-Gum Bazooka"]);
   });
 });
