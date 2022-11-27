@@ -1,15 +1,20 @@
 import { client } from "../postgres_client.ts";
 
 export class Crew {
+  public _popularityRanking = "";
+
   constructor(
     private _id: number,
     public name: string,
     public bounty: bigint,
-    public ranking: string,
   ) {}
 
   get id(): number {
     return this._id;
+  }
+
+  get popularityRanking(): string {
+    return this._popularityRanking;
   }
 
   async insert(): Promise<void> {
@@ -51,8 +56,8 @@ export class CrewFinder {
       row.id,
       row.name,
       row.bounty,
-      ranking,
     );
+    crewGateway._popularityRanking = ranking;
     return crewGateway;
   }
 }

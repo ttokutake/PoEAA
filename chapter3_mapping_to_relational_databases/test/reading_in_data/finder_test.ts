@@ -20,7 +20,7 @@ import {
 } from "../test_helper.ts";
 
 async function insertData() {
-  const crew = new Crew(1, "Luffy", BigInt(1_500_000_000), "");
+  const crew = new Crew(1, "Luffy", BigInt(1_500_000_000));
   await crew.insert();
 }
 
@@ -51,6 +51,6 @@ describe("CrewFinder", () => {
 
     assertEquals(crew.name, "Luffy");
     assertEquals(crew.bounty, BigInt(1_500_000_000));
-    assertEquals(crew.ranking, "1st");
+    assertEquals(crew.popularityRanking, "1st");
   });
 });
