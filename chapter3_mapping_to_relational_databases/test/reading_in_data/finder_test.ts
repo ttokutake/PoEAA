@@ -20,13 +20,13 @@ import {
 } from "../test_helper.ts";
 
 async function insertData() {
-  const crew = new Crew(1, "Luffy", BigInt(1_500_000_000), 0);
+  const crew = new Crew(1, "Luffy", BigInt(1_500_000_000), "");
   await crew.insert();
 }
 
 const PopularityVoteServiceStub: PopularityVoteService = class {
-  static getRanking(_id: number): Promise<number> {
-    return Promise.resolve(1);
+  static getRanking(_id: number): Promise<string> {
+    return Promise.resolve("1st");
   }
 };
 
@@ -51,6 +51,6 @@ describe("CrewFinder", () => {
 
     assertEquals(crew.name, "Luffy");
     assertEquals(crew.bounty, BigInt(1_500_000_000));
-    assertEquals(crew.ranking, 1);
+    assertEquals(crew.ranking, "1st");
   });
 });

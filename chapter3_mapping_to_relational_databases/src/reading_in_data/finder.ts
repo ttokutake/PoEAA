@@ -5,7 +5,7 @@ export class Crew {
     private _id: number,
     public name: string,
     public bounty: bigint,
-    public ranking: number,
+    public ranking: string,
   ) {}
 
   get id(): number {
@@ -21,7 +21,7 @@ export class Crew {
 }
 
 export interface PopularityVoteService {
-  getRanking: (id: number) => Promise<number>;
+  getRanking: (id: number) => Promise<string>;
 }
 
 interface CrewsRow {
