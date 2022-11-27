@@ -17,11 +17,11 @@ import {
 
 async function insertData() {
   const data = [
-    { name: "Luffy", bounty: BigInt(1_500_000_000) },
-    { name: "Zoro", bounty: BigInt(320_000_000) },
+    { id: 1, name: "Luffy", bounty: BigInt(1_500_000_000) },
+    { id: 2, name: "Zoro", bounty: BigInt(320_000_000) },
   ];
-  for (const { name, bounty } of data) {
-    const crewGateway = new CrewGateway(name, bounty);
+  for (const { id, name, bounty } of data) {
+    const crewGateway = new CrewGateway(id, name, bounty);
     await crewGateway.insert();
   }
 }

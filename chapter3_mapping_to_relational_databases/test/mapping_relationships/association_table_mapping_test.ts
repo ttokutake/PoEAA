@@ -39,12 +39,11 @@ async function insertData() {
     },
   ];
   for (const { id, name, bounty, hakiList } of data) {
-    const crew = new Crew(name, bounty);
+    const crew = new Crew(id, name, bounty);
     await crew.insert();
-    const insertedCrew = await Crew.find(id);
     for (const hakiName of hakiList) {
       const haki = await Haki.findByName(hakiName);
-      await insertedCrew.addHaki(haki);
+      await crew.addHaki(haki);
     }
   }
 }

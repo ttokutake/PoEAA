@@ -17,11 +17,10 @@ import {
 } from "../test_helper.ts";
 
 async function insertData() {
-  const crew = new Crew("Luffy", BigInt(1_500_000_000));
+  const crew = new Crew(1, "Luffy", BigInt(1_500_000_000));
   await crew.insert();
-  const insertedCrew = await Crew.find(1);
-  await insertedCrew.addSpecialMove("Gum-Gum Pistol");
-  await insertedCrew.addSpecialMove("Gum-Gum Bazooka");
+  await crew.addSpecialMove("Gum-Gum Pistol");
+  await crew.addSpecialMove("Gum-Gum Bazooka");
 }
 
 describe("Crew", () => {

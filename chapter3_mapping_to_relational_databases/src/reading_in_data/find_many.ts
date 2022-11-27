@@ -7,9 +7,8 @@ interface CrewsRow {
 }
 
 export class CrewGateway {
-  private _id = 0;
-
   constructor(
+    private _id: number,
     public name: string,
     public bounty: bigint,
   ) {}
@@ -31,11 +30,9 @@ export class CrewGateway {
       FROM crews
       WHERE id IN (${ids.join(",")})
     `);
-    const crewGateways = rows.map((row: CrewsRow) => {
-      const crewGateway = new CrewGateway(row.name, row.bounty);
-      crewGateway._id = row.id;
-      return crewGateway;
-    });
+    const crewGateways = rows.map((row: CrewsRow) =>
+      new CrewGateway(row.id, row.name, row.bounty)
+    );
     return crewGateways;
   }
 
@@ -50,9 +47,7 @@ export class CrewGateway {
       if (!row) {
         throw new Error("Record Not Found");
       }
-      const crewGateway = new CrewGateway(row.name, row.bounty);
-      crewGateway._id = row.id;
-      return crewGateway;
+      return new CrewGateway(row.id, row.name, row.bounty);
     });
     return Promise.all(crewGateways);
   }

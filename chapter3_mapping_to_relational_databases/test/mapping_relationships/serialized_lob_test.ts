@@ -20,7 +20,7 @@ async function insertData() {
       "Nami possesses several abilities. She can tell climate changes and draw sea charts.",
     "Reference": "https://en.wikipedia.org/wiki/Nami_(One_Piece)",
   };
-  const data = new CrewGateway("Nami", BigInt(60_000_000), wikipedia);
+  const data = new CrewGateway(1, "Nami", BigInt(60_000_000), wikipedia);
   await data.insert();
 }
 

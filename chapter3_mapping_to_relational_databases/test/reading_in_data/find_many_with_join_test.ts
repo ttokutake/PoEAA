@@ -33,11 +33,10 @@ async function insertData() {
     },
   ];
   for (const { id, name, bounty, specialMoves } of data) {
-    const crew = new Crew(name, bounty);
+    const crew = new Crew(id, name, bounty);
     await crew.insert();
-    const insertedCrew = await Crew.find(id);
     for (const specialMove of specialMoves) {
-      await insertedCrew.addSpecialMove(specialMove);
+      await crew.addSpecialMove(specialMove);
     }
   }
 }

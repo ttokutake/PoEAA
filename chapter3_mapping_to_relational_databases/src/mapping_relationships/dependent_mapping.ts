@@ -11,10 +11,10 @@ interface SpecialMove {
 }
 
 export class Crew {
-  private _id = 0;
   private _specialMoves: string[] = [];
 
   constructor(
+    private _id: number,
     public name: string,
     public bounty: bigint,
   ) {}
@@ -24,13 +24,13 @@ export class Crew {
   }
 
   get specialMoves(): string[] {
-    return this.specialMoves;
+    return this._specialMoves;
   }
 
   async insert(): Promise<void> {
     await client.queryArray`
-      INSERT INTO crews (name, bounty)
-      VALUES (${this.name}, ${this.bounty})
+      INSERT INTO crews (id, name, bounty)
+      VALUES (${this.id}, ${this.name}, ${this.bounty})
     `;
   }
 
@@ -51,8 +51,7 @@ export class Crew {
     if (!row) {
       throw new Error("Record Not Found");
     }
-    const crew = new Crew(row.name, row.bounty);
-    crew._id = row.id;
+    const crew = new Crew(row.id, row.name, row.bounty);
     crew._specialMoves = await this.findSpecialMoves(crew.id);
     return crew;
   }

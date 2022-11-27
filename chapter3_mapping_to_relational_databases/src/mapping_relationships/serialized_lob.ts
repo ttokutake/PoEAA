@@ -8,9 +8,8 @@ interface CrewsRow {
 }
 
 export class CrewGateway {
-  private _id = 0;
-
   constructor(
+    private _id: number,
     public name: string,
     public bounty: bigint,
     public wikipedia: Record<string, unknown>,
@@ -22,8 +21,8 @@ export class CrewGateway {
 
   async insert(): Promise<void> {
     await client.queryArray`
-      INSERT INTO crews (name, bounty, wikipedia)
-      VALUES (${this.name}, ${this.bounty}, ${this.wikipedia})
+      INSERT INTO crews (id, name, bounty, wikipedia)
+      VALUES (${this.id}, ${this.name}, ${this.bounty}, ${this.wikipedia})
     `;
   }
 
@@ -41,8 +40,6 @@ export class CrewGateway {
     if (!row) {
       throw new Error("Record Not Found");
     }
-    const crewGateway = new CrewGateway(row.name, row.bounty, row.wikipedia);
-    crewGateway._id = row.id;
-    return crewGateway;
+    return new CrewGateway(row.id, row.name, row.bounty, row.wikipedia);
   }
 }

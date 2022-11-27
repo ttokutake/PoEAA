@@ -18,7 +18,7 @@ import { dropTable, truncateCrewsTable } from "../test_helper.ts";
 
 async function insertData() {
   const bounty = new Money(BigInt(60_000_000), "Berry");
-  const data = new CrewGateway("Nami", bounty);
+  const data = new CrewGateway(1, "Nami", bounty);
   await data.insert();
 }
 

@@ -8,10 +8,10 @@ interface Row {
 }
 
 export class Crew {
-  private _id = 0;
   private _specialMoves: string[] = [];
 
   constructor(
+    private _id: number,
     public name: string,
     public bounty: bigint,
   ) {}
@@ -26,8 +26,8 @@ export class Crew {
 
   async insert(): Promise<void> {
     await client.queryArray`
-      INSERT INTO crews (name, bounty)
-      VALUES (${this.name}, ${this.bounty})
+      INSERT INTO crews (id, name, bounty)
+      VALUES (${this.id}, ${this.name}, ${this.bounty})
     `;
   }
 
@@ -36,21 +36,6 @@ export class Crew {
       INSERT INTO special_moves (name, crew_id)
       VALUES (${name}, ${this.id})
     `;
-  }
-
-  static async find(id: number): Promise<Crew> {
-    const { rows: [row] } = await client.queryObject<Row>`
-      SELECT id, name, bounty
-      FROM crews
-      WHERE id = ${id}
-      LIMIT 1
-    `;
-    if (!row) {
-      throw new Error("Record Not Found");
-    }
-    const crew = new Crew(row.name, row.bounty);
-    crew._id = id;
-    return crew;
   }
 
   static async findMany(ids: number[]): Promise<Crew[]> {
@@ -64,18 +49,17 @@ export class Crew {
       JOIN special_moves ON special_moves.crew_id = crews.id
       WHERE crews.id IN (${ids.join(",")})
     `);
-    const crewsMap = rows.reduce((dict: { [id: number]: Crew }, row: Row) => {
-      if (dict[row.id]) {
-        const crew = dict[row.id];
+    const crewsMap = rows.reduce((map: { [id: number]: Crew }, row: Row) => {
+      if (map[row.id]) {
+        const crew = map[row.id];
         crew._specialMoves = [...crew.specialMoves, row.special_move];
-        return dict;
+        return map;
       }
 
-      const crew = new Crew(row.name, row.bounty);
-      crew._id = row.id;
+      const crew = new Crew(row.id, row.name, row.bounty);
       crew._specialMoves = [row.special_move];
-      dict[row.id] = crew;
-      return dict;
+      map[row.id] = crew;
+      return map;
     }, {});
     return Object.values(crewsMap);
   }

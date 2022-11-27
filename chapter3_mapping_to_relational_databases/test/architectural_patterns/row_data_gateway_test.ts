@@ -17,7 +17,7 @@ import {
 } from "../test_helper.ts";
 
 async function insertData() {
-  const data = new CrewGateway("Nami", BigInt(60_000_000));
+  const data = new CrewGateway(1, "Nami", BigInt(60_000_000));
   await data.insert();
 }
 

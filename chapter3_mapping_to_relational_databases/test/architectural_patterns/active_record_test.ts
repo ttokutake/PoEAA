@@ -17,7 +17,7 @@ import {
 } from "../test_helper.ts";
 
 async function insertData() {
-  const crew = new Crew("Nami", BigInt(60_000_000));
+  const crew = new Crew(1, "Nami", BigInt(60_000_000));
   await crew.insert();
 }
 

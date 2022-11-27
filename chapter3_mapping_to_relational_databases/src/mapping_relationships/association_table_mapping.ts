@@ -43,10 +43,10 @@ interface CrewsRow {
 }
 
 export class Crew {
-  private _id = 0;
   public hakiList: Haki[] = [];
 
   constructor(
+    private _id: number,
     public name: string,
     public bounty: bigint,
   ) {}
@@ -57,8 +57,8 @@ export class Crew {
 
   async insert(): Promise<void> {
     await client.queryArray`
-      INSERT INTO crews (name, bounty)
-      VALUES (${this.name}, ${this.bounty})
+      INSERT INTO crews (id, name, bounty)
+      VALUES (${this.id}, ${this.name}, ${this.bounty})
     `;
   }
 
@@ -79,8 +79,7 @@ export class Crew {
     if (!row) {
       throw new Error("Record Not Found");
     }
-    const crew = new Crew(row.name, row.bounty);
-    crew._id = row.id;
+    const crew = new Crew(row.id, row.name, row.bounty);
     crew.hakiList = await this.findHaki(crew.id);
     return crew;
   }
