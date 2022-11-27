@@ -55,7 +55,7 @@ interface CrewsRow {
 }
 
 export class Crew {
-  public hakiList: Haki[] = [];
+  private _hakiList: Haki[] = [];
 
   constructor(
     private _id: number,
@@ -65,6 +65,10 @@ export class Crew {
 
   get id(): number {
     return this._id;
+  }
+
+  get hakiList(): Haki[] {
+    return this._hakiList;
   }
 
   async insert(): Promise<void> {
@@ -91,7 +95,7 @@ export class Crew {
       throw new Error("Record Not Found");
     }
     const crew = new Crew(row.id, row.name, row.bounty);
-    crew.hakiList = await Haki.findForCrew(crew.id);
+    crew._hakiList = await Haki.findForCrew(crew.id);
     return crew;
   }
 }
