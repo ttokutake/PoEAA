@@ -18,10 +18,6 @@ export class Crew {
       VALUES (${this.id}, ${this.name}, ${this.bounty})
     `;
   }
-
-  isDanger(): boolean {
-    return this.bounty >= 1_000_000_000;
-  }
 }
 
 export interface PopularityVoteService {
