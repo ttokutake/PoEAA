@@ -21,4 +21,8 @@ export class SpecialMove {
     public name: string,
     public crewId: number,
   ) {}
+
+  get id(): number {
+    return this._id;
+  }
 }

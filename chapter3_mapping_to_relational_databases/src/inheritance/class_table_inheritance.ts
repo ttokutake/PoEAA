@@ -1,9 +1,8 @@
 import { client } from "../postgres_client.ts";
 
 abstract class Person {
-  protected _id = 0;
-
   constructor(
+    protected _id: number,
     public name: string,
   ) {}
 
@@ -11,13 +10,11 @@ abstract class Person {
     return this._id;
   }
 
-  protected async insert(): Promise<number> {
+  protected async insert(): Promise<void> {
     await client.queryArray`
-      INSERT INTO people (name)
-      VALUES (${this.name})
+      INSERT INTO people (id, name)
+      VALUES (${this.id}, ${this.name})
     `;
-    const id = await this.findIdByName();
-    return id;
   }
 
   protected async findIdByName(): Promise<number> {
@@ -41,19 +38,19 @@ interface PiratesRow {
 
 export class Pirate extends Person {
   constructor(
+    protected _id: number,
     public name: string,
     public role: string,
   ) {
-    super(name);
+    super(_id, name);
   }
 
-  async insert(): Promise<number> {
-    const id = await super.insert();
+  async insert(): Promise<void> {
+    await super.insert();
     await client.queryArray`
       INSERT INTO pirates (person_id, role)
-      VALUES (${id}, ${this.role})
+      VALUES (${this.id}, ${this.role})
     `;
-    return id;
   }
 
   static async find(id: number): Promise<Pirate> {
@@ -67,9 +64,7 @@ export class Pirate extends Person {
     if (!row) {
       throw new Error("Record Not Found");
     }
-    const pirate = new Pirate(row.name, row.role);
-    pirate._id = row.id;
-    return pirate;
+    return new Pirate(row.id, row.name, row.role);
   }
 }
 
@@ -81,19 +76,19 @@ interface MarinesRow {
 
 export class Marine extends Person {
   constructor(
+    protected _id: number,
     public name: string,
     public rank: string,
   ) {
-    super(name);
+    super(_id, name);
   }
 
-  async insert(): Promise<number> {
-    const id = await super.insert();
+  async insert(): Promise<void> {
+    await super.insert();
     await client.queryArray`
       INSERT INTO marines (person_id, rank)
-      VALUES (${id}, ${this.rank})
+      VALUES (${this.id}, ${this.rank})
     `;
-    return id;
   }
 
   static async find(id: number): Promise<Marine> {
@@ -107,8 +102,6 @@ export class Marine extends Person {
     if (!row) {
       throw new Error("Record Not Found");
     }
-    const marine = new Marine(row.name, row.rank);
-    marine._id = row.id;
-    return marine;
+    return new Marine(row.id, row.name, row.rank);
   }
 }

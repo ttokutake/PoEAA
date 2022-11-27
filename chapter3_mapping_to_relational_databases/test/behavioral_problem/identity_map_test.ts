@@ -17,7 +17,7 @@ import {
 
 async function insertData() {
   const crewGateway = new CrewGateway();
-  await crewGateway.insert("Luffy", BigInt(1_500_000_000));
+  await crewGateway.insert(1, "Luffy", BigInt(1_500_000_000));
 }
 
 describe("CrewGateway", () => {

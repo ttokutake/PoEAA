@@ -15,9 +15,9 @@ import {
 import { client } from "../../src/postgres_client.ts";
 
 async function insertData() {
-  const pirate = new Pirate("Jimbei", "Helmsman");
+  const pirate = new Pirate(1, "Jimbei", "Helmsman");
   await pirate.insert();
-  const marine = new Marine("Smoker", "Vice Admiral");
+  const marine = new Marine(1, "Smoker", "Vice Admiral");
   await marine.insert();
 }
 

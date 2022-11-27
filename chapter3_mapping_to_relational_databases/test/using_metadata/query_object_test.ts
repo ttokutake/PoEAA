@@ -27,20 +27,38 @@ async function insertData() {
       id: 1,
       name: "Luffy",
       bounty: BigInt(1_500_000_000),
-      specialMoves: ["Gum-Gum Pistol", "Gum-Gum Bazooka"],
+      specialMoves: [
+        {
+          id: 1,
+          name: "Gum-Gum Pistol",
+        },
+        {
+          id: 2,
+          name: "Gum-Gum Bazooka",
+        },
+      ],
     },
     {
       id: 2,
       name: "Zoro",
       bounty: BigInt(320_000_000),
-      specialMoves: ["Oni Giri", "Tora Gari"],
+      specialMoves: [
+        {
+          id: 3,
+          name: "Oni Giri",
+        },
+        {
+          id: 4,
+          name: "Tora Gari",
+        },
+      ],
     },
   ];
-  for (const { id, name, bounty, specialMoves } of data) {
-    const crew = new Crew(name, bounty);
+  for (const { id: cId, name: cName, bounty, specialMoves } of data) {
+    const crew = new Crew(cId, cName, bounty);
     await crew.insert();
-    for (const specialMoveName of specialMoves) {
-      const specialMove = new SpecialMove(specialMoveName, id);
+    for (const { id: sId, name: sName } of specialMoves) {
+      const specialMove = new SpecialMove(sId, sName, cId);
       await specialMove.insert();
     }
   }

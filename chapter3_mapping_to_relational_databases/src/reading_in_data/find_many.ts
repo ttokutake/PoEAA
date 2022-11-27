@@ -19,8 +19,8 @@ export class CrewGateway {
 
   async insert(): Promise<void> {
     await client.queryArray`
-      INSERT INTO crews (name, bounty)
-      VALUES (${this.name}, ${this.bounty})
+      INSERT INTO crews (id, name, bounty)
+      VALUES (${this.id}, ${this.name}, ${this.bounty})
     `;
   }
 

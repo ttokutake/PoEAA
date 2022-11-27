@@ -20,10 +20,10 @@ import {
 } from "../test_helper.ts";
 
 async function insertData() {
-  const crew = new Crew("Luffy", BigInt(1_500_000_000));
+  const crew = new Crew(1, "Luffy", BigInt(1_500_000_000));
   await crew.insert();
 
-  const specialMove = new SpecialMove("Gum-Gum Pistol", 1);
+  const specialMove = new SpecialMove(1, "Gum-Gum Pistol", 1);
   await specialMove.insert();
 }
 

@@ -20,7 +20,7 @@ import {
 } from "../test_helper.ts";
 
 async function insertData() {
-  const crew = new Crew(0, "Luffy", BigInt(1_500_000_000), 0);
+  const crew = new Crew(1, "Luffy", BigInt(1_500_000_000), 0);
   await crew.insert();
 }
 

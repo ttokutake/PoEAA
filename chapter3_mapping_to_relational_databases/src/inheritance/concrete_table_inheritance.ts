@@ -1,9 +1,8 @@
 import { client } from "../postgres_client.ts";
 
 abstract class Person {
-  protected _id = 0;
-
   constructor(
+    protected _id: number,
     public name: string,
   ) {}
 
@@ -20,16 +19,17 @@ interface PiratesRow {
 
 export class Pirate extends Person {
   constructor(
+    protected _id: number,
     public name: string,
     public role: string,
   ) {
-    super(name);
+    super(_id, name);
   }
 
   async insert(): Promise<void> {
     await client.queryArray`
-      INSERT INTO pirates (name, role)
-      VALUES (${this.name}, ${this.role})
+      INSERT INTO pirates (id, name, role)
+      VALUES (${this.id}, ${this.name}, ${this.role})
     `;
   }
 
@@ -42,9 +42,7 @@ export class Pirate extends Person {
     if (!row) {
       throw new Error("Record Not Found");
     }
-    const pirate = new Pirate(row.name, row.role);
-    pirate._id = row.id;
-    return pirate;
+    return new Pirate(row.id, row.name, row.role);
   }
 }
 
@@ -56,16 +54,17 @@ interface MarinesRow {
 
 export class Marine extends Person {
   constructor(
+    protected _id: number,
     public name: string,
     public rank: string,
   ) {
-    super(name);
+    super(_id, name);
   }
 
   async insert(): Promise<void> {
     await client.queryArray`
-      INSERT INTO marines (name, rank)
-      VALUES (${this.name}, ${this.rank})
+      INSERT INTO marines (id, name, rank)
+      VALUES (${this.id}, ${this.name}, ${this.rank})
     `;
   }
 
@@ -78,8 +77,6 @@ export class Marine extends Person {
     if (!row) {
       throw new Error("Record Not Found");
     }
-    const marine = new Marine(row.name, row.rank);
-    marine._id = row.id;
-    return marine;
+    return new Marine(row.id, row.name, row.rank);
   }
 }

@@ -11,10 +11,10 @@ type RecordSet = CrewsRow[];
 export class CrewGateway {
   private identityMap: { [id: number]: CrewsRow } = {};
 
-  async insert(name: string, bounty: bigint): Promise<void> {
+  async insert(id: number, name: string, bounty: bigint): Promise<void> {
     await client.queryArray`
-      INSERT INTO crews (name, bounty)
-      VALUES (${name}, ${bounty})
+      INSERT INTO crews (id, name, bounty)
+      VALUES (${id}, ${name}, ${bounty})
     `;
   }
 

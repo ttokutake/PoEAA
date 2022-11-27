@@ -11,8 +11,8 @@ interface CrewsRow {
 export class CrewMapper {
   async insert(crew: Crew) {
     await client.queryArray`
-      INSERT INTO crews (name, bounty)
-      VALUES (${crew.name}, ${crew.bounty})
+      INSERT INTO crews (id, name, bounty)
+      VALUES (${crew.id}, ${crew.name}, ${crew.bounty})
     `;
   }
 

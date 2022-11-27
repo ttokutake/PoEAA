@@ -32,8 +32,9 @@ interface SpecialMovesRow {
 }
 
 export class SpecialMove {
+  private _id = 0;
+
   constructor(
-    private _id: number,
     public name: string,
     public crewId: number,
   ) {}
@@ -44,8 +45,8 @@ export class SpecialMove {
 
   async insert() {
     await client.queryArray`
-      INSERT INTO special_moves (id, name, crew_id)
-      VALUES (${this.id}, ${this.name}, ${this.crewId})
+      INSERT INTO special_moves (name, crew_id)
+      VALUES (${this.name}, ${this.crewId})
     `;
   }
 
@@ -56,7 +57,7 @@ export class SpecialMove {
       WHERE crew_id = ${crewId}
     `;
     const specialMoves = rows.map((row: SpecialMovesRow) =>
-      new SpecialMove(row.id, row.name, row.crew_id)
+      new SpecialMove(row.name, row.crew_id)
     );
     return specialMoves;
   }

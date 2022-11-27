@@ -11,25 +11,24 @@ abstract class BaseModel {
   protected static fields: ConfigField[];
 
   protected static idField = { name: "id", column: "id" };
-  protected _id = 0;
+
+  static get allFields(): ConfigField[] {
+    return [this.idField, ...this.fields];
+  }
 
   [index: string]: unknown;
 
-  constructor(...values: unknown[]) {
+  constructor(protected id: number, ...values: unknown[]) {
     (<typeof BaseModel> this.constructor).fields.forEach((field, index) => {
       this[field.name] = values[index];
     });
   }
 
-  get id(): number {
-    return this._id;
-  }
-
   async insert(): Promise<void> {
     const self = <typeof BaseModel> this.constructor;
-    const columnNames = self.fields.map(({ column }) => column);
-    const placeholders = self.fields.map((_v, i) => `$${i + 1}`);
-    const values = self.fields.map(({ name }) => this[name]);
+    const columnNames = self.allFields.map(({ column }) => column);
+    const placeholders = self.allFields.map((_v, i) => `$${i + 1}`);
+    const values = self.allFields.map(({ name }) => this[name]);
 
     await client.queryArray(
       `
@@ -41,20 +40,17 @@ abstract class BaseModel {
   }
 
   static async find(id: unknown): Promise<BaseModel> {
-    const columnNames = this.fields.map(({ column }) => column);
+    const columnNames = this.allFields.map(({ column }) => column);
     const { rows: [row] } = await client.queryArray(`
-      SELECT ${this.idField.column}, ${columnNames.join(",")}
+      SELECT ${columnNames.join(",")}
       FROM ${this.table}
       WHERE ${this.idField.column} = ${id}
     `);
     if (!row) {
       throw new Error("Record Not Found");
     }
-    const valuesWithoutId = row.slice(1);
     // @ts-ignore: I don't know how to specify concrete class except "this"
-    const instance = new this(...valuesWithoutId);
-    instance._id = row[0] as number;
-    return instance;
+    return new this(...row);
   }
 }
 

@@ -66,8 +66,8 @@ abstract class BaseMapper {
 
   async insert(...values: unknown[]): Promise<void> {
     const self = <typeof BaseMapper> this.constructor;
-    const columnNames = self.fields.map(({ column }) => column);
-    const placeholders = self.fields.map((_v, i) => `$${i + 1}`);
+    const columnNames = self.allFields.map(({ column }) => column);
+    const placeholders = self.allFields.map((_v, i) => `$${i + 1}`);
 
     await client.queryArray(
       `
@@ -88,7 +88,7 @@ export class CrewMapper extends BaseMapper {
   protected static fields: ConfigField[] = config.crew.fields;
 
   insert(crew: Crew): Promise<void> {
-    return super.insert(crew.name, crew.bounty);
+    return super.insert(crew.id, crew.name, crew.bounty);
   }
 }
 
@@ -97,7 +97,7 @@ export class SpecialMoveMapper extends BaseMapper {
   protected static fields: ConfigField[] = config.special_move.fields;
 
   insert(specialMove: SpecialMove): Promise<void> {
-    return super.insert(specialMove.name, specialMove.crewId);
+    return super.insert(specialMove.id, specialMove.name, specialMove.crewId);
   }
 }
 

@@ -9,9 +9,9 @@ interface PeopleRow {
 
 abstract class Person {
   protected static type = "";
-  protected _id = 0;
 
   constructor(
+    protected _id: number,
     public name: string,
   ) {}
 
@@ -24,16 +24,17 @@ export class Pirate extends Person {
   protected static type = "pirate";
 
   constructor(
+    protected _id: number,
     public name: string,
     public role: string,
   ) {
-    super(name);
+    super(_id, name);
   }
 
   async insert(): Promise<void> {
     await client.queryArray`
-      INSERT INTO people (name, type, role)
-      VALUES (${this.name}, ${Pirate.type}, ${this.role})
+      INSERT INTO people (id, name, type, role)
+      VALUES (${this.id}, ${this.name}, ${Pirate.type}, ${this.role})
     `;
   }
 
@@ -49,9 +50,7 @@ export class Pirate extends Person {
     if (!row.role) {
       throw new Error('Pirate must have "role"');
     }
-    const pirate = new Pirate(row.name, row.role);
-    pirate._id = row.id;
-    return pirate;
+    return new Pirate(row.id, row.name, row.role);
   }
 }
 
@@ -59,16 +58,17 @@ export class Marine extends Person {
   protected static type = "marine";
 
   constructor(
+    protected _id: number,
     public name: string,
     public rank: string,
   ) {
-    super(name);
+    super(_id, name);
   }
 
   async insert(): Promise<void> {
     await client.queryArray`
-      INSERT INTO people (name, type, rank)
-      VALUES (${this.name}, ${Marine.type}, ${this.rank})
+      INSERT INTO people (id, name, type, rank)
+      VALUES (${this.id}, ${this.name}, ${Marine.type}, ${this.rank})
     `;
   }
 
@@ -84,8 +84,6 @@ export class Marine extends Person {
     if (!row.rank) {
       throw new Error('Pirate must have "rank"');
     }
-    const marine = new Marine(row.name, row.rank);
-    marine._id = row.id;
-    return marine;
+    return new Marine(row.id, row.name, row.rank);
   }
 }
