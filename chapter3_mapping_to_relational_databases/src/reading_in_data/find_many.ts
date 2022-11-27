@@ -37,17 +37,18 @@ export class CrewGateway {
   }
 
   static findManyInBadWay(ids: number[]): Promise<CrewGateway[]> {
-    const crewGateways = ids.map(async (id: number) => {
-      const { rows: [row] } = await client.queryObject<CrewsRow>`
-        SELECT id, name, bounty
-        FROM crews
-        WHERE id = ${id}
-      `;
-      if (!row) {
-        throw new Error("Record Not Found");
-      }
-      return new CrewGateway(row.id, row.name, row.bounty);
-    });
-    return Promise.all(crewGateways);
+    return Promise.all(ids.map((id: number) => this.find(id)));
+  }
+
+  static async find(id: number): Promise<CrewGateway> {
+    const { rows: [row] } = await client.queryObject<CrewsRow>`
+      SELECT id, name, bounty
+      FROM crews
+      WHERE id = ${id}
+    `;
+    if (!row) {
+      throw new Error("Record Not Found");
+    }
+    return new CrewGateway(row.id, row.name, row.bounty);
   }
 }
