@@ -33,6 +33,19 @@ export class Haki {
     }
     return new Haki(row.id, row.name);
   }
+
+  static async findForCrew(crew_id: number): Promise<Haki[]> {
+    const { rows } = await client.queryObject<HakiListRow>`
+      SELECT haki_id AS id, name
+      FROM crews_haki_list
+      JOIN haki_list ON haki_list.id = crews_haki_list.haki_id
+      WHERE crew_id = ${crew_id}
+    `;
+    const hakiList = rows.map(({ id, name }: HakiListRow) =>
+      new Haki(id, name)
+    );
+    return hakiList;
+  }
 }
 
 interface CrewsRow {
@@ -78,20 +91,7 @@ export class Crew {
       throw new Error("Record Not Found");
     }
     const crew = new Crew(row.id, row.name, row.bounty);
-    crew.hakiList = await this.findHaki(crew.id);
+    crew.hakiList = await Haki.findForCrew(crew.id);
     return crew;
-  }
-
-  private static async findHaki(crew_id: number): Promise<Haki[]> {
-    const { rows } = await client.queryObject<HakiListRow>`
-      SELECT haki_id AS id, name
-      FROM crews_haki_list
-      JOIN haki_list ON haki_list.id = crews_haki_list.haki_id
-      WHERE crew_id = ${crew_id}
-    `;
-    const hakiList = rows.map(({ id, name }: HakiListRow) =>
-      new Haki(id, name)
-    );
-    return hakiList;
   }
 }
