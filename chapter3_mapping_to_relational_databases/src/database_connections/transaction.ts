@@ -65,7 +65,6 @@ export class Crew {
       SELECT id, name, bounty
       FROM crews
       WHERE id = ${id}
-      LIMIT 1
     `;
     if (!crewRow) {
       throw new Error("Record Not Found");

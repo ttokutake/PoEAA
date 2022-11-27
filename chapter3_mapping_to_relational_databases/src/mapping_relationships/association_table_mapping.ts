@@ -27,7 +27,6 @@ export class Haki {
       SELECT id, name
       FROM haki_list
       WHERE name = ${name}
-      LIMIT 1
     `;
     if (!row) {
       throw new Error("Record Not Found");
@@ -74,7 +73,6 @@ export class Crew {
       SELECT id, name, bounty
       FROM crews
       WHERE id = ${id}
-      LIMIT 1
     `;
     if (!row) {
       throw new Error("Record Not Found");

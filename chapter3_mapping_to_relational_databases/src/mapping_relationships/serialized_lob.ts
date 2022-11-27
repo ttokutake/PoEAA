@@ -35,7 +35,6 @@ export class CrewGateway {
         wikipedia
       FROM crews
       WHERE id = ${id}
-      LIMIT 1
     `;
     if (!row) {
       throw new Error("Record Not Found");

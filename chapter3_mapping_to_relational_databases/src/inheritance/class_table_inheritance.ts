@@ -25,7 +25,6 @@ abstract class Person {
       SELECT id
       FROM people
       WHERE name = ${this.name}
-      LIMIT 1
     `;
     if (!row) {
       throw new Error("Record Not Found");
@@ -64,7 +63,6 @@ export class Pirate extends Person {
       INNER JOIN pirates
         ON person_id = id
       WHERE id = ${id}
-      LIMIT 1
     `;
     if (!row) {
       throw new Error("Record Not Found");
@@ -105,7 +103,6 @@ export class Marine extends Person {
       INNER JOIN marines
         ON person_id = id
       WHERE id = ${id}
-      LIMIT 1
     `;
     if (!row) {
       throw new Error("Record Not Found");

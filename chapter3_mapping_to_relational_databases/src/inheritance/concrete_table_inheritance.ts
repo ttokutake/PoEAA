@@ -38,7 +38,6 @@ export class Pirate extends Person {
       SELECT id, name, role
       FROM pirates
       WHERE id = ${id}
-      LIMIT 1
     `;
     if (!row) {
       throw new Error("Record Not Found");
@@ -75,7 +74,6 @@ export class Marine extends Person {
       SELECT id, name, rank
       FROM marines
       WHERE id = ${id}
-      LIMIT 1
     `;
     if (!row) {
       throw new Error("Record Not Found");

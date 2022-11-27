@@ -48,7 +48,6 @@ export class CrewGateway {
         bounty_currency
       FROM crews
       WHERE id = ${id}
-      LIMIT 1
     `;
     if (!row) {
       throw new Error("Record Not Found");

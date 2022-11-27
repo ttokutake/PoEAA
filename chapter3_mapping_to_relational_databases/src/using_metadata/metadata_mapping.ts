@@ -46,7 +46,6 @@ abstract class BaseModel {
       SELECT ${this.idField.column}, ${columnNames.join(",")}
       FROM ${this.table}
       WHERE ${this.idField.column} = ${id}
-      LIMIT 1
     `);
     if (!row) {
       throw new Error("Record Not Found");

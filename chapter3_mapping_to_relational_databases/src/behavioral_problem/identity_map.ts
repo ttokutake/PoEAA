@@ -34,7 +34,6 @@ export class CrewGateway {
       SELECT id, name, bounty
       FROM crews
       WHERE id = ${id}
-      LIMIT 1
     `;
 
     if (rows.length) {
