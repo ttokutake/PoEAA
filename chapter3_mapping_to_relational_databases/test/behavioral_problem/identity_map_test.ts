@@ -37,20 +37,16 @@ describe("CrewGateway", () => {
 
   it("find", async () => {
     const crewGateway = new CrewGateway();
-    const [row] = await crewGateway.find(1);
 
-    assertEquals(row.name, "Luffy");
-    assertEquals(row.bounty, BigInt(1_500_000_000));
+    const [row1] = await crewGateway.find(1);
+    row1.name = "Franky";
 
-    await crewGateway.delete(row.id);
-    const [cachedRow] = await crewGateway.find(row.id);
+    const [row2] = await crewGateway.find(1);
+    row2.bounty = BigInt(94_000_000);
 
-    assertEquals(cachedRow.name, "Luffy");
-    assertEquals(cachedRow.bounty, BigInt(1_500_000_000));
+    await crewGateway.update(row2.id, row2.name, row2.bounty);
 
-    crewGateway.clearIdentityMap();
-    const recordSet = await crewGateway.find(row.id);
-
-    assertEquals(recordSet, []);
+    assertEquals(row1.name, "Franky");
+    assertEquals(row1.bounty, BigInt(94_000_000));
   });
 });

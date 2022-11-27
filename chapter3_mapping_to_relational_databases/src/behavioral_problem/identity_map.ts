@@ -18,9 +18,10 @@ export class CrewGateway {
     `;
   }
 
-  async delete(id: number): Promise<void> {
+  async update(id: number, name: string, bounty: bigint): Promise<void> {
     await client.queryArray`
-      DELETE FROM crews
+      UPDATE crews
+      SET name=${name}, bounty=${bounty}
       WHERE id=${id}
     `;
   }
@@ -42,9 +43,5 @@ export class CrewGateway {
     }
 
     return rows;
-  }
-
-  clearIdentityMap() {
-    this.identityMap = {};
   }
 }
