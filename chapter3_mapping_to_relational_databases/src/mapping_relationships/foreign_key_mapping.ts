@@ -7,6 +7,8 @@ interface CrewsRow {
 }
 
 export class Crew {
+  private _specialMoves: SpecialMove[] = [];
+
   constructor(
     private _id: number,
     public name: string,
@@ -17,11 +19,29 @@ export class Crew {
     return this._id;
   }
 
+  get specialMoves(): SpecialMove[] {
+    return this._specialMoves;
+  }
+
   async insert(): Promise<void> {
     await client.queryArray`
       INSERT INTO crews (id, name, bounty)
       VALUES (${this.id}, ${this.name}, ${this.bounty})
     `;
+  }
+
+  static async find(id: number): Promise<Crew> {
+    const { rows: [row] } = await client.queryObject<CrewsRow>`
+      SELECT id, name, bounty
+      FROM crews
+      WHERE id = ${id}
+    `;
+    if (!row) {
+      throw new Error("Record Not Found");
+    }
+    const crew = new Crew(row.id, row.name, row.bounty);
+    crew._specialMoves = await SpecialMove.findForCrew(crew.id);
+    return crew;
   }
 }
 

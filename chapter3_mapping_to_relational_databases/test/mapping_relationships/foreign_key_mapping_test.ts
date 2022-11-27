@@ -28,7 +28,7 @@ async function insertData() {
   await specialMove2.insert();
 }
 
-describe("SpecialMove", () => {
+describe("Crew", () => {
   beforeAll(async () => {
     await createCrewsTable();
     await createSpecialMovesTable();
@@ -44,10 +44,10 @@ describe("SpecialMove", () => {
     await truncateCrewsTable();
   });
 
-  it("findForCrew", async () => {
-    const specialMoves = await SpecialMove.findForCrew(1);
+  it("find", async () => {
+    const crew = await Crew.find(1);
 
-    assertEquals(specialMoves[0].name, "Gum-Gum Pistol");
-    assertEquals(specialMoves[1].name, "Gum-Gum Bazooka");
+    assertEquals(crew.specialMoves[0].name, "Gum-Gum Pistol");
+    assertEquals(crew.specialMoves[1].name, "Gum-Gum Bazooka");
   });
 });
