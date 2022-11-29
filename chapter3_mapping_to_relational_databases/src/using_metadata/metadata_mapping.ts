@@ -19,7 +19,8 @@ abstract class BaseModel {
   [index: string]: unknown;
 
   constructor(protected id: number, ...values: unknown[]) {
-    (<typeof BaseModel> this.constructor).fields.forEach((field, index) => {
+    const self = <typeof BaseModel> this.constructor;
+    self.fields.forEach((field, index) => {
       this[field.name] = values[index];
     });
   }
