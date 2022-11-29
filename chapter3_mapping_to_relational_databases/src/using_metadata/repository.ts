@@ -84,8 +84,8 @@ const configJson = await Deno.readTextFile(`${__dirname}/config.json`);
 const config = JSON.parse(configJson);
 
 export class CrewMapper extends BaseMapper {
-  protected static _table = config.crew.table;
-  protected static fields: ConfigField[] = config.crew.fields;
+  protected static _table = config.Crew.table;
+  protected static fields: ConfigField[] = config.Crew.fields;
 
   insert(crew: Crew): Promise<void> {
     return super.insert(crew.id, crew.name, crew.bounty);
@@ -93,8 +93,8 @@ export class CrewMapper extends BaseMapper {
 }
 
 export class SpecialMoveMapper extends BaseMapper {
-  protected static _table = config.special_move.table;
-  protected static fields: ConfigField[] = config.special_move.fields;
+  protected static _table = config.SpecialMove.table;
+  protected static fields: ConfigField[] = config.SpecialMove.fields;
 
   insert(specialMove: SpecialMove): Promise<void> {
     return super.insert(specialMove.id, specialMove.name, specialMove.crewId);

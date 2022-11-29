@@ -60,11 +60,11 @@ const configJson = await Deno.readTextFile(`${__dirname}/config.json`);
 const config = JSON.parse(configJson);
 
 export class Crew extends BaseModel {
-  protected static table = config.crew.table;
-  protected static fields: ConfigField[] = config.crew.fields;
+  protected static table = config.Crew.table;
+  protected static fields: ConfigField[] = config.Crew.fields;
 }
 
 export class SpecialMove extends BaseModel {
-  protected static table = config.special_move.table;
-  protected static fields: ConfigField[] = config.special_move.fields;
+  protected static table = config.SpecialMove.table;
+  protected static fields: ConfigField[] = config.SpecialMove.fields;
 }
