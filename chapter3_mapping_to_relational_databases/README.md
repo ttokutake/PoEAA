@@ -1,7 +1,7 @@
 # How to Use
 
 ```
-$ docker-compose run --rm develop bash
+$ docker-compose run --rm dev bash
 $ deno test --allow-net --allow-read
 ```
 

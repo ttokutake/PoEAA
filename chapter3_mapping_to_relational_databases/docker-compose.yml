@@ -6,7 +6,7 @@ services:
       - postgresql-data:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: password
-  develop:
+  dev:
     build: .
     volumes:
       - .:/app
