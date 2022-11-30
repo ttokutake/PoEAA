@@ -110,7 +110,9 @@ export class CrewRepository {
     const whereClause = crewQueryObject.generateWhereClause();
 
     const crewColumnNames = CrewMapper.allFields.map(({ column }) => column);
-    const { rows: crewRows } = await client.queryArray(`
+    const { rows: crewRows } = await client.queryArray<
+      [number, string, bigint]
+    >(`
       SELECT ${crewColumnNames.join(",")}
       FROM ${CrewMapper.table}
       WHERE ${whereClause}
@@ -128,17 +130,22 @@ export class CrewRepository {
     if (!specialMoveCrewIdField) {
       throw new Error("Field Not Found: crewId");
     }
-    const crewIds = crewRows.map((row) => row[0]);
-    const { rows: specialMoveRows } = await client.queryArray(`
+    const crewIds = crewRows.map(([id]) => id);
+    const { rows: specialMoveRows } = await client.queryArray<
+      [number, string, number]
+    >(`
       SELECT ${specialMoveColumnNames.join(",")}
       FROM ${SpecialMoveMapper.table}
       WHERE ${specialMoveCrewIdField.column} IN (${crewIds.join(",")})
     `);
-    const crews = crewRows.map((crewRow) => {
-      const [crewId, name, bounty] = crewRow as [number, string, bigint];
-      const specialMoves = specialMoveRows.filter((row) => row[2] == crewId);
-      const specialMoveNames = specialMoves.map((row) => row[1]) as string[];
-      return new Crew(crewId, name, bounty, specialMoveNames);
+    const crews = crewRows.map(([crewId, crewName, bounty]) => {
+      const crewSpecialMoveRows = specialMoveRows.filter((
+        [_sId, _sName, cId],
+      ) => cId == crewId);
+      const specialMoveNames = crewSpecialMoveRows.map(([_sId, sName]) =>
+        sName
+      );
+      return new Crew(crewId, crewName, bounty, specialMoveNames);
     });
     return crews;
   }
