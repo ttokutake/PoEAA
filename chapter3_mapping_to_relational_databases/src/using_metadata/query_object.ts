@@ -18,7 +18,7 @@ export class Criteria {
   }
 
   generateSql(fields: ConfigField[]): string {
-    const field = fields.find(({ name }) => name == this.fieldName);
+    const field = fields.find(({ name }) => name === this.fieldName);
     if (!field) {
       throw new Error(`Field Not Found: ${this.fieldName}`);
     }

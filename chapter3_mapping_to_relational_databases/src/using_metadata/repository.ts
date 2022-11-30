@@ -20,7 +20,7 @@ export class Criteria {
   }
 
   generateSql(fields: ConfigField[]): string {
-    const field = fields.find(({ name }) => name == this.fieldName);
+    const field = fields.find(({ name }) => name === this.fieldName);
     if (!field) {
       throw new Error(`Field Not Found: ${this.fieldName}`);
     }
@@ -126,7 +126,7 @@ export class CrewRepository {
     ) => column);
     const specialMoveCrewIdField = SpecialMoveMapper.allFields.find((
       { name },
-    ) => name == "crewId");
+    ) => name === "crewId");
     if (!specialMoveCrewIdField) {
       throw new Error("Field Not Found: crewId");
     }
@@ -141,7 +141,7 @@ export class CrewRepository {
     const crews = crewRows.map(([crewId, crewName, bounty]) => {
       const crewSpecialMoveRows = specialMoveRows.filter((
         [_sId, _sName, cId],
-      ) => cId == crewId);
+      ) => cId === crewId);
       const specialMoveNames = crewSpecialMoveRows.map(([_sId, sName]) =>
         sName
       );
