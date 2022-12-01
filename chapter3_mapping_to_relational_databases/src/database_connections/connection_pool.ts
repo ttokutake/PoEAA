@@ -13,19 +13,14 @@ const connectionParams = {
 };
 
 export async function tryDbConnections() {
-  console.log(`--- ${new Date().toISOString()}: initialized ---`);
   const client = new Client(connectionParams);
   const pool = new Pool(connectionParams, 1);
   await sleep(1);
 
   for (let i = 0; i < 3; i++) {
-    console.log(`### ${i} ###\n`);
-
-    console.log(`[${new Date().toISOString()}]: connect by client`);
     await client.connect();
     await client.end();
 
-    console.log(`[${new Date().toISOString()}]: connect by poolClient\n`);
     const poolClient = await pool.connect();
     poolClient.release();
   }
