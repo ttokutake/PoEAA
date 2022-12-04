@@ -82,7 +82,7 @@ export class Marine extends Person {
       throw new Error("Record Not Found");
     }
     if (!row.rank) {
-      throw new Error('Pirate must have "rank"');
+      throw new Error('Marine must have "rank"');
     }
     return new Marine(row.id, row.name, row.rank);
   }
