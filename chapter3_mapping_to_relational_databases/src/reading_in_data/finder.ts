@@ -1,12 +1,11 @@
 import { client } from "../postgres_client.ts";
 
 export class Crew {
-  public _popularityRanking = "";
-
   constructor(
     private _id: number,
     public name: string,
     public bounty: bigint,
+    private _popularityRanking: string,
   ) {}
 
   get id(): number {
@@ -52,12 +51,11 @@ export class CrewFinder {
 
     const ranking = await this.popularityVoteService.getRanking(row.id);
 
-    const crewGateway = new Crew(
+    return new Crew(
       row.id,
       row.name,
       row.bounty,
+      ranking,
     );
-    crewGateway._popularityRanking = ranking;
-    return crewGateway;
   }
 }
