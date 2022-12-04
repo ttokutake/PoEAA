@@ -37,7 +37,7 @@ export class CrewGateway {
   async find(id: number): Promise<RecordSet> {
     await Registry.client.connect();
     const { rows } = await Registry.client.queryObject<CrewsRow>`
-      SELECT id, name
+      SELECT id, name, bounty
       FROM crews
       WHERE id = ${id}
     `;
