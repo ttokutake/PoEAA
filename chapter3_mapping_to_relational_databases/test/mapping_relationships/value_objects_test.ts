@@ -2,7 +2,6 @@ import {
   afterAll,
   afterEach,
   assertEquals,
-  assertThrows,
   beforeAll,
   beforeEach,
   describe,
@@ -23,21 +22,17 @@ async function insertData() {
 }
 
 describe("Money", () => {
-  it("isGreaterThan", () => {
+  it("equalsTo", () => {
     const money1 = new Money(BigInt(1_000_000), "Berry");
 
-    const money2 = new Money(BigInt(1_000), "Berry");
-    assertEquals(money1.isGreaterThan(money2), true);
+    const money2 = new Money(BigInt(1_000_000), "Berry");
+    assertEquals(money1.equalsTo(money2), true);
 
-    const money3 = new Money(BigInt(1_000_000_000), "Berry");
-    assertEquals(money1.isGreaterThan(money3), false);
+    const money3 = new Money(BigInt(999_999), "Berry");
+    assertEquals(money1.equalsTo(money3), false);
 
-    const money4 = new Money(BigInt(1_000), "Yen");
-    assertThrows(
-      () => money1.isGreaterThan(money4),
-      Error,
-      "Cannot compare Berry to Yen",
-    );
+    const money4 = new Money(BigInt(1_000_000), "Yen");
+    assertEquals(money1.equalsTo(money4), false);
   });
 });
 

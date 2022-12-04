@@ -6,11 +6,8 @@ export class Money {
     public currency: string,
   ) {}
 
-  isGreaterThan(money: Money) {
-    if (this.currency != money.currency) {
-      throw new Error(`Cannot compare ${this.currency} to ${money.currency}`);
-    }
-    return this.amount > money.amount;
+  equalsTo(money: Money) {
+    return this.amount === money.amount && this.currency === money.currency;
   }
 }
 
