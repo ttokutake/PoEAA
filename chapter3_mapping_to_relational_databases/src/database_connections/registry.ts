@@ -16,48 +16,32 @@ class Registry {
   }
 }
 
-export class Presentation {
-  static async handler(_request: Request): Promise<Response> {
-    const domainModel = await Domain.domainModel();
-
-    const html = `
-      <html>
-        <title>Database Connections</title>
-        <body>
-          <div>ID: ${domainModel.id}</div>
-          <div>Name: ${domainModel.name}</div>
-        </body>
-      </html>
-    `;
-
-    return new Response(html, {
-      status: 200,
-      headers: { "content-type": "text/html; charset=utf-8" },
-    });
-  }
-}
-
-interface DomainModel {
+interface CrewsRow {
   id: number;
   name: string;
+  bounty: bigint;
 }
 
-class Domain {
-  static domainModel(): Promise<DomainModel> {
-    const dataSource = new DataSource();
-    return dataSource.find(1);
-  }
-}
+type RecordSet = CrewsRow[];
 
-class DataSource {
-  async find(id: number): Promise<DomainModel> {
+export class CrewGateway {
+  async insert(id: number, name: string, bounty: bigint): Promise<void> {
     await Registry.client.connect();
-    const { rows: [row] } = await Registry.client.queryObject<DomainModel>`
+    await Registry.client.queryArray`
+      INSERT INTO crews (id, name, bounty)
+      VALUES (${id}, ${name}, ${bounty})
+    `;
+    await Registry.client.end();
+  }
+
+  async find(id: number): Promise<RecordSet> {
+    await Registry.client.connect();
+    const { rows } = await Registry.client.queryObject<CrewsRow>`
       SELECT id, name
       FROM crews
       WHERE id = ${id}
     `;
     await Registry.client.end();
-    return row;
+    return rows;
   }
 }

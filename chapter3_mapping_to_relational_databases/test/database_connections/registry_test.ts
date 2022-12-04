@@ -1,46 +1,26 @@
 import {
   afterAll,
   afterEach,
-  assertMatch,
+  assertEquals,
   beforeAll,
   beforeEach,
   describe,
   it,
 } from "../../dev_deps.ts";
 
-import { client } from "../../src/postgres_client.ts";
-import { Presentation } from "../../src/database_connections/registry.ts";
+import { CrewGateway } from "../../src/database_connections/registry.ts";
 import {
   createCrewsTable,
   dropTable,
   truncateCrewsTable,
 } from "../test_helper.ts";
 
-async function insertData(): Promise<void> {
-  await client.queryArray`
-    INSERT INTO crews (name, bounty)
-    VALUES (${"Nami"}, ${60_000_000})
-  `;
+async function insertData() {
+  const crewGateway = new CrewGateway();
+  await crewGateway.insert(1, "Nami", BigInt(60_000_000));
 }
 
-async function streamToString(readableStream: ReadableStream): Promise<string> {
-  async function streamToStringImpl(
-    reader: ReadableStreamReader,
-    result: string,
-  ): Promise<string> {
-    const { done, value } = await reader.read();
-    if (done) {
-      return result;
-    }
-    result += new TextDecoder().decode(value);
-    return streamToStringImpl(reader, result);
-  }
-  const reader = readableStream.getReader();
-  const result = await streamToStringImpl(reader, "");
-  return result;
-}
-
-describe("Presentation", () => {
+describe("CrewGateway", () => {
   beforeAll(async () => {
     await createCrewsTable();
   });
@@ -55,13 +35,11 @@ describe("Presentation", () => {
     await truncateCrewsTable();
   });
 
-  describe("handler", () => {
-    it("returns Response", async () => {
-      const request = new Request("http://example.com");
-      const response = await Presentation.handler(request);
-      const result = await streamToString(response.body!);
-      assertMatch(result, /ID: 1/);
-      assertMatch(result, /Name: Nami/);
-    });
+  it("find", async () => {
+    const crewGateway = new CrewGateway();
+    const [row] = await crewGateway.find(1);
+
+    assertEquals(row.name, "Nami");
+    assertEquals(row.bounty, BigInt(60_000_000));
   });
 });
