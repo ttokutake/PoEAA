@@ -26,8 +26,7 @@ describe("Person", () => {
     await client.queryArray`
       CREATE TABLE IF NOT EXISTS people (
         id SERIAL PRIMARY KEY,
-        name VARCHAR(256) NOT NULL,
-        UNIQUE(name)
+        name VARCHAR(256) NOT NULL
       )
     `;
     await client.queryArray`

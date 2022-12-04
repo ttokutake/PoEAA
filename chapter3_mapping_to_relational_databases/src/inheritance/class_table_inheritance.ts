@@ -16,18 +16,6 @@ abstract class Person {
       VALUES (${this.id}, ${this.name})
     `;
   }
-
-  protected async findIdByName(): Promise<number> {
-    const { rows: [row] } = await client.queryObject<{ id: number }>`
-      SELECT id
-      FROM people
-      WHERE name = ${this.name}
-    `;
-    if (!row) {
-      throw new Error("Record Not Found");
-    }
-    return row.id;
-  }
 }
 
 interface PiratesRow {
