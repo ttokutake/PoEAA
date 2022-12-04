@@ -8,7 +8,7 @@ import {
   it,
 } from "../../dev_deps.ts";
 
-import { Crew } from "../../src/database_connections/transaction.ts";
+import { Crew } from "../../src/database_connections/connection_by_transaction.ts";
 import {
   createCrewsTable,
   createSpecialMovesTable,
