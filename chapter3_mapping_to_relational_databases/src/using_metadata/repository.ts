@@ -31,7 +31,7 @@ export class Criteria {
   }
 }
 
-export class QueryObject {
+class QueryObject {
   private criteria: Criteria[] = [];
 
   constructor(
