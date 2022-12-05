@@ -139,12 +139,10 @@ export class CrewRepository {
       WHERE ${specialMoveCrewIdField.column} IN (${crewIds.join(",")})
     `);
     const crews = crewRows.map(([crewId, crewName, bounty]) => {
-      const crewSpecialMoveRows = specialMoveRows.filter((
-        [_sId, _sName, cId],
-      ) => cId === crewId);
-      const specialMoveNames = crewSpecialMoveRows.map(([_sId, sName]) =>
-        sName
+      const crewSpecialMoveRows = specialMoveRows.filter(([_id, _name, cId]) =>
+        cId === crewId
       );
+      const specialMoveNames = crewSpecialMoveRows.map(([_id, name]) => name);
       return new Crew(crewId, crewName, bounty, specialMoveNames);
     });
     return crews;
