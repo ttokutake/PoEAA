@@ -31,7 +31,7 @@ describe("Money", () => {
     const money3 = new Money(BigInt(999_999), "Berry");
     assertEquals(money1.equalsTo(money3), false);
 
-    const money4 = new Money(BigInt(1_000_000), "Yen");
+    const money4 = new Money(BigInt(1_000_000), "Extol");
     assertEquals(money1.equalsTo(money4), false);
   });
 });
