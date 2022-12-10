@@ -19,7 +19,9 @@ export class Presentation {
 
     const html = `
       <html>
-        <title>Layering</title>
+        <head>
+          <title>Layering</title>
+        </head>
         <body>
           <div>Total Bounty: ${pirate.totalBounty}</div>
           <ul>

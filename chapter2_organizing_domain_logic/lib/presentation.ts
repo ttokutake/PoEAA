@@ -13,7 +13,9 @@ export class Presentation {
 
     const html = `
       <html>
-        <title>Organizing Domain Logic</title>
+        <head>
+          <title>Organizing Domain Logic</title>
+        </head>
         <body>
           <div>Total Bounty: ${pirate.totalBounty}</div>
           <ul>
