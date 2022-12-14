@@ -11,4 +11,4 @@ RUN chown -R deno:deno /deno-dir
 
 USER deno
 
-CMD ["deno", "run", "--allow-net", "main.ts"]
+CMD ["deno", "run", "--allow-net", "--allow-read", "main.ts"]
