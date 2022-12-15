@@ -1,16 +1,18 @@
-import { dirname, fromFileUrl, handlebarsEngine } from "../deps.ts";
+import { dirname, fromFileUrl, HandlebarsJS } from "../deps.ts";
+
+import { Crew } from "./model.ts";
 
 const __dirname = dirname(fromFileUrl(import.meta.url));
-const htmlTemplate = await Deno.readTextFile(`${__dirname}/view.html.mustache`);
+
+const indexTemplate = await Deno.readTextFile(
+  `${__dirname}/index.html.mustache`,
+);
+const indexView = HandlebarsJS.compile(indexTemplate);
 
 export class Controller {
-  static async index(request: Request): Promise<Response> {
-    // TODO: Model
-    const params = {
-      method: request.method,
-      url: request.url,
-    };
-    const html = await handlebarsEngine(htmlTemplate, params);
+  static index(_request: Request): Response {
+    const crews = Crew.findAll();
+    const html = indexView({ crews });
     return new Response(html, {
       status: 200,
       headers: { "content-type": "text/html; charset=utf-8" },
