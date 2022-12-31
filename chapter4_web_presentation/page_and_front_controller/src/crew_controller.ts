@@ -9,16 +9,11 @@ const crewTemplate = await Deno.readTextFile(
 );
 const crewView = HandlebarsJS.compile(crewTemplate);
 
-export const PATH_REGEXP = new RegExp("^/crew/(\\d+)");
-
 export class CrewController {
   static page(request: Request): Response {
     const url = new URL(request.url);
-    const result = url.pathname.match(PATH_REGEXP);
-    if (result == null) {
-      throw new Error("Internal Error");
-    }
-    const crew = Crew.find(parseInt(result[1]));
+    const idString = url.searchParams.get("id") || '';
+    const crew = Crew.find(parseInt(idString));
     const html = crewView({ crew });
     return new Response(html, {
       status: 200,

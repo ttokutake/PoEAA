@@ -1,11 +1,11 @@
 <html>
   <head>
-    <title>Page Controller - Index</title>
+    <title>Page and Front Controller - Index</title>
   </head>
   <body>
     <ul>
       {{#each crews}}
-        <li><a href="/crew/{{this.id}}">{{this.name}}</a></li>
+        <li><a href="/crew?id={{this.id}}">{{this.name}}</a></li>
       {{/each}}
     </ul>
   </body>
