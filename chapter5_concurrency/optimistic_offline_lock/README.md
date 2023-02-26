@@ -2,7 +2,7 @@
 
 ```
 $ docker-compose run --rm dev bash
-$ deno test --allow-net --allow-read
+$ deno test --allow-net
 ```
 
 ## DB Console

@@ -67,7 +67,7 @@ export class Crew {
 
   static async find(id: number, owner: string): Promise<Crew> {
     const { rows: [row] } = await client.queryObject<CrewsRow>`
-      SELECT id as id, name, bounty, owner
+      SELECT id, name, bounty, owner
       FROM crews
       LEFT OUTER JOIN write_locks ON resource_id = crews.id AND resource_name = ${this.resourceName}
       WHERE id = ${id}
