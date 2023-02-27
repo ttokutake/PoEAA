@@ -14,7 +14,7 @@ class Registry
   end
 end
 
-(1..5).map do
+(1..3).map do
   Thread.start do
     Registry.instance
     Registry.instance
