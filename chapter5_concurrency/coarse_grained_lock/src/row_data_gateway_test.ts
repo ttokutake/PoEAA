@@ -66,7 +66,11 @@ describe("SpecialMove", () => {
       await specialMovesOnProcess1[0].update();
 
       // NOTE: I don't know why I must attach "await"
-      await assertRejects(() => specialMovesOnProcess2[0].update(), Error, "Conflict Occurred");
+      await assertRejects(
+        () => specialMovesOnProcess2[0].update(),
+        Error,
+        "Conflict Occurred",
+      );
     });
   });
 
