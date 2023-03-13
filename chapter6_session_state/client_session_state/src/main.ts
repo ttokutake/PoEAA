@@ -1,22 +1,16 @@
-import { serve } from "../deps.ts";
+import { serve, dirname, fromFileUrl } from "../deps.ts";
 
 const port = 8080;
 
-function handler(request: Request): Promise<Response> {
-  // const url = new URL(request.url);
+const __dirname = dirname(fromFileUrl(import.meta.url));
+const indexHtml = await Deno.readTextFile(
+  `${__dirname}/index.html`,
+);
 
-  const html = `
-    <html>
-      <head>
-        <title>Layering</title>
-      </head>
-      <body>
-        <p>hello, world!</p>
-      </body>
-    </html>
-  `;
+function handler(request: Request): Response {
+  const _url = new URL(request.url);
 
-  return new Response(html, {
+  return new Response(indexHtml, {
     status: 200,
     headers: { "content-type": "text/html; charset=utf-8" },
   });

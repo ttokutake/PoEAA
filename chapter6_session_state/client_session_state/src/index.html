@@ -1,0 +1,39 @@
+<html>
+  <head>
+    <title>Client Session State</title>
+  </head>
+  <body>
+    <form action="/next">
+      <div>
+        <label for="name">Name</label>
+        <input type="text" name="name" placeholder="Luffy" />
+      </div>
+      <div>
+        <label for="bounty">Bounty</label>
+        <input type="number" name="bounty" min="0" placeholder="1500000000" />
+      </div>
+      <input type="submit" value="Next" />
+    </form>
+    <script>
+      function save(e) {
+        const nameInput = document.querySelector("input[name='name']");
+        const bountyInput = document.querySelector("input[name='bounty']");
+
+        window.sessionStorage.setItem("name", nameInput.value);
+        window.sessionStorage.setItem("bounty", bountyInput.value);
+      }
+
+      const form = document.querySelector("form");
+      form.addEventListener("submit", save);
+
+      if (window.sessionStorage.getItem("name")) {
+        const nameInput = document.querySelector("input[name='name']");
+        nameInput.value = window.sessionStorage.getItem("name");
+      }
+      if (window.sessionStorage.getItem("bounty")) {
+        const bountyInput = document.querySelector("input[name='bounty']");
+        bountyInput.value = window.sessionStorage.getItem("bounty");
+      }
+    </script>
+  </body>
+</html>
