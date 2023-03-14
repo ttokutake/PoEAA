@@ -1,0 +1,57 @@
+<html>
+  <head>
+    <title>Client Session State</title>
+  </head>
+  <body>
+    <form action="/complete">
+      <div>
+        <label for="name">Name</label>
+        <input type="text" id="name" name="name" readonly />
+      </div>
+      <div>
+        <label for="bounty">Bounty</label>
+        <input type="number" id="bounty" name="bounty" readonly />
+      </div>
+      <div>
+        <label for="role">Role</label>
+        <select id="role" name="role" required>
+          <option value="captain">Captain</option>
+          <option value="swordsman">Swordsman</option>
+          <option value="navigator">Navigator</option>
+          <option value="sniper">Sniper</option>
+          <option value="cook">Cook</option>
+        </select>
+      </div>
+      <input type="submit" value="Submit" />
+    </form>
+    <script>
+      const name = window.sessionStorage.getItem("name");
+      if (name) {
+        const nameInput = document.getElementById("name");
+        nameInput.value = name;
+      }
+
+      const bounty = window.sessionStorage.getItem("bounty");
+      if (bounty) {
+        const bountyInput = document.getElementById("bounty");
+        bountyInput.value = bounty;
+      }
+
+      const role = window.sessionStorage.getItem("role");
+      if (role) {
+        const roleOptions = document.querySelectorAll("option");
+        roleOptions.forEach((option) => {
+          if (option.value == role) {
+            option.selected = true;
+          } else {
+            option.disabled = true;
+          }
+        });
+      }
+
+      if (!(name && bounty && role)) {
+        window.location.href = "/";
+      }
+    </script>
+  </body>
+</html>

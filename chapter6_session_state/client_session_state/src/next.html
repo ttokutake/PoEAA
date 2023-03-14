@@ -1,0 +1,30 @@
+<html>
+  <head>
+    <title>Client Session State</title>
+  </head>
+  <body>
+    <form action="/confirm">
+      <div>
+        <label for="role">Role</label>
+        <select id="role" name="role" required>
+          <option value="captain" selected>Captain</option>
+          <option value="swordsman">Swordsman</option>
+          <option value="navigator">Navigator</option>
+          <option value="sniper">Sniper</option>
+          <option value="cook">Cook</option>
+        </select>
+      </div>
+      <input type="submit" value="Confirm" />
+    </form>
+    <script>
+      function save(e) {
+        const roleSelect = document.getElementById("role");
+
+        window.sessionStorage.setItem("role", roleSelect.value);
+      }
+
+      const form = document.querySelector("form");
+      form.addEventListener("submit", save);
+    </script>
+  </body>
+</html>
