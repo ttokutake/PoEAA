@@ -32,7 +32,7 @@ async function handler(request: Request): Promise<Response> {
         <form action="/confirm">
           <div>
             <label for="role">Role</label>
-            <select id="role" name="role" required>
+            <select id="role" name="role">
               <option value="captain" selected>Captain</option>
               <option value="swordsman">Swordsman</option>
               <option value="navigator">Navigator</option>
@@ -65,7 +65,7 @@ async function handler(request: Request): Promise<Response> {
           </div>
           <div>
             <label for="role">Role</label>
-            <select id="role" name="role" required>
+            <select id="role" name="role">
               <option ${optionProps("captain")}>Captain</option>
               <option ${optionProps("swordsman")}>Swordsman</option>
               <option ${optionProps("navigator")}>Navigator</option>
