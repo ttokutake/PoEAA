@@ -125,7 +125,7 @@ async function handler(request: Request): Promise<Response> {
   const html = `
     <html>
       <head>
-        <title>Server Session State</title>
+        <title>Database Session State</title>
       </head>
       <body>
         ${body}
