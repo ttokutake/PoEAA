@@ -1,4 +1,4 @@
-import { serve, dirname, fromFileUrl } from "../deps.ts";
+import { dirname, fromFileUrl, serve } from "../deps.ts";
 
 const port = 8080;
 
@@ -21,13 +21,13 @@ function handler(request: Request): Response {
 
   let html;
   switch (url.pathname) {
-    case '/next':
+    case "/next":
       html = nextHtml;
       break;
-    case '/confirm':
+    case "/confirm":
       html = confirmHtml;
       break;
-    case '/complete':
+    case "/complete":
       html = completeHtml;
       break;
     default:

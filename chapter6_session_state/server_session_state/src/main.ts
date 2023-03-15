@@ -1,4 +1,4 @@
-import { connect, serve, setCookie, getCookies } from "../deps.ts";
+import { connect, getCookies, serve, setCookie } from "../deps.ts";
 
 const port = 8080;
 
@@ -19,15 +19,15 @@ async function handler(request: Request): Promise<Response> {
   const headers = new Headers({ "content-type": "text/html; charset=utf-8" });
   if (!sessionId) {
     sessionId = crypto.randomUUID();
-    setCookie(headers, {name: "sessionId", value: sessionId});
+    setCookie(headers, { name: "sessionId", value: sessionId });
   }
 
   let body;
   switch (url.pathname) {
-    case '/next': {
+    case "/next": {
       const name = url.searchParams.get("name") || "";
       const bounty = url.searchParams.get("bounty") || "";
-      await redis.set(sessionId, JSON.stringify({name, bounty}));
+      await redis.set(sessionId, JSON.stringify({ name, bounty }));
       body = `
         <form action="/confirm">
           <div>
@@ -45,10 +45,12 @@ async function handler(request: Request): Promise<Response> {
       `;
       break;
     }
-    case '/confirm': {
+    case "/confirm": {
       const role = url.searchParams.get("role") || "captain";
       const sessionString = await redis.get(sessionId);
-      const session = sessionString ? JSON.parse(sessionString) : defaultSession;
+      const session = sessionString
+        ? JSON.parse(sessionString)
+        : defaultSession;
       body = `
         <form action="/complete">
           <div>
@@ -62,11 +64,21 @@ async function handler(request: Request): Promise<Response> {
           <div>
             <label for="role">Role</label>
             <select id="role" name="role" required>
-              <option value="captain" ${role == "captain" ? "selected" : "disabled"}>Captain</option>
-              <option value="swordsman" ${role == "swordsman" ? "selected" : "disabled"}>Swordsman</option>
-              <option value="navigator" ${role == "navigator" ? "selected" : "disabled"}>Navigator</option>
-              <option value="sniper" ${role == "sniper" ? "selected" : "disabled"}>Sniper</option>
-              <option value="cook" ${role == "cook" ? "selected" : "disabled"}>Cook</option>
+              <option value="captain" ${
+        role == "captain" ? "selected" : "disabled"
+      }>Captain</option>
+              <option value="swordsman" ${
+        role == "swordsman" ? "selected" : "disabled"
+      }>Swordsman</option>
+              <option value="navigator" ${
+        role == "navigator" ? "selected" : "disabled"
+      }>Navigator</option>
+              <option value="sniper" ${
+        role == "sniper" ? "selected" : "disabled"
+      }>Sniper</option>
+              <option value="cook" ${
+        role == "cook" ? "selected" : "disabled"
+      }>Cook</option>
             </select>
           </div>
           <input type="submit" value="Submit" />
@@ -81,7 +93,7 @@ async function handler(request: Request): Promise<Response> {
       `;
       break;
     }
-    case '/complete':
+    case "/complete":
       await redis.del(sessionId);
       body = "<div>Submitted!</div>";
       break;
