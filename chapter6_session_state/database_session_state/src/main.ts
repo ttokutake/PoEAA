@@ -64,6 +64,8 @@ async function handler(request: Request): Promise<Response> {
         WHERE id = ${sessionId}
       `;
       const session = result.rows.length ? result.rows[0] : defaultSession;
+      const optionProps = (roleValue: string) =>
+        `value="${roleValue}" ${roleValue == role ? "selected" : "disabled"}`;
       body = `
         <form action="/complete">
           <div>
@@ -77,21 +79,11 @@ async function handler(request: Request): Promise<Response> {
           <div>
             <label for="role">Role</label>
             <select id="role" name="role" required>
-              <option value="captain" ${
-        role == "captain" ? "selected" : "disabled"
-      }>Captain</option>
-              <option value="swordsman" ${
-        role == "swordsman" ? "selected" : "disabled"
-      }>Swordsman</option>
-              <option value="navigator" ${
-        role == "navigator" ? "selected" : "disabled"
-      }>Navigator</option>
-              <option value="sniper" ${
-        role == "sniper" ? "selected" : "disabled"
-      }>Sniper</option>
-              <option value="cook" ${
-        role == "cook" ? "selected" : "disabled"
-      }>Cook</option>
+              <option ${optionProps("captain")}>Captain</option>
+              <option ${optionProps("swordsman")}>Swordsman</option>
+              <option ${optionProps("navigator")}>Navigator</option>
+              <option ${optionProps("sniper")}>Sniper</option>
+              <option ${optionProps("cook")}>Cook</option>
             </select>
           </div>
           <input type="submit" value="Submit" />
