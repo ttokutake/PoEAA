@@ -28,6 +28,7 @@ function handler(request: Request): Response {
       html = confirmHtml;
       break;
     case "/complete":
+      // NOTE: Save sent data into a database here!
       html = completeHtml;
       break;
     default:

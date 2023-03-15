@@ -107,6 +107,7 @@ async function handler(request: Request): Promise<Response> {
       break;
     }
     case "/complete":
+      // NOTE: Save sent data into a database here!
       await client.queryArray`
         DELETE FROM sessions
         WHERE id = ${sessionId}

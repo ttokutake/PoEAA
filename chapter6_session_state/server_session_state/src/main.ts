@@ -94,6 +94,7 @@ async function handler(request: Request): Promise<Response> {
       break;
     }
     case "/complete":
+      // NOTE: Save sent data into a database here!
       await redis.del(sessionId);
       body = "<div>Submitted!</div>";
       break;
