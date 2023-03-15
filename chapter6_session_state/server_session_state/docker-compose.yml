@@ -1,0 +1,12 @@
+version: "3.9"
+services:
+  redis:
+    image: redis:7.0.9
+  web:
+    build: .
+    volumes:
+      - .:/app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - redis
