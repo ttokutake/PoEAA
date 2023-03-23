@@ -1,0 +1,16 @@
+version: "3.9"
+services:
+  web:
+    build: ./remote_facade
+    volumes:
+      - ./remote_facade:/app
+    ports:
+      - "8080:8080"
+    depends_on:
+      - api
+  api:
+    build: ./data_transfer_object
+    volumes:
+      - ./data_transfer_object:/app
+    ports:
+      - "8081:8080"

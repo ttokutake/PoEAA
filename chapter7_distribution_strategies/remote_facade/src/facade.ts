@@ -2,26 +2,33 @@ interface CrewData {
   id: number;
   name: string;
   bounty: number;
+  specialMoves: SpecialMove[];
+}
+
+interface SpecialMove {
+  id: number;
+  name: string;
 }
 
 export class CrewFacade {
-  static fetch(_id: number): CrewData {
+  static async fetch(_id: number): Promise<CrewData> {
     // NOTE: Fetch crew data from a server
-    const responseBody = '{"id":1,"name":"Luffy","bounty":1500000000}';
-    return JSON.parse(responseBody);
+    const response = await fetch("http://api:8080");
+    const crewData = await response.json();
+    return crewData;
   }
 
   static create(crewData: CrewData) {
     const _requestBody = JSON.stringify(crewData);
-    // NOTE: Send crew data to a server for creation
+    // TODO: Send crew data to a server for creation
   }
 
   static update(crewData: CrewData) {
     const _requestBody = JSON.stringify(crewData);
-    // NOTE: Send crew data to a server for update
+    // TODO: Send crew data to a server for update
   }
 
   static delete(_id: string) {
-    // NOTE: Send a request to a server for deletion
+    // TODO: Send a request to a server for deletion
   }
 }

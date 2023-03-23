@@ -1,8 +1,11 @@
 import { CrewFacade } from "./facade.ts";
 
 export class Presentation {
-  static handler(_request: Request): Response {
-    const crewData = CrewFacade.fetch(1);
+  static async handler(_request: Request): Promise<Response> {
+    const crewData = await CrewFacade.fetch(1);
+    const specialMoveContent = crewData.specialMoves
+      .map((s) => `<li>${s.name}</li>`)
+      .join("");
 
     const html = `
       <html>
@@ -12,6 +15,10 @@ export class Presentation {
         <body>
           <div>name: ${crewData.name}</div>
           <div>bounty: ${crewData.bounty}</div>
+          <div>
+            special move:
+            <ul>${specialMoveContent}</ul>
+          </div>
         </body>
       </html>
     `;
