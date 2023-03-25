@@ -7,7 +7,7 @@ export class Crew {
   ) {}
 
   static fetch(_id: number) {
-    // NOTE: Fetch data from a data source like DB
+    // TODO: Fetch data from a data source like DB
     const specialMoves = [
       new SpecialMove(1, "Gum-Gum Pistol"),
       new SpecialMove(2, "Gum-Gum Bazooka"),
