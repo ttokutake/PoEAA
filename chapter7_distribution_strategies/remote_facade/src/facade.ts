@@ -12,7 +12,6 @@ interface SpecialMove {
 
 export class CrewFacade {
   static async fetch(_id: number): Promise<CrewData> {
-    // NOTE: Fetch crew data from a server
     const response = await fetch("http://api:8080");
     const crewData = await response.json();
     return crewData;
